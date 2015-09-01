@@ -411,8 +411,9 @@ function oikp_get_requires( $version ) {
  * @return string - the largest value - determined using version_compare()
  */
 function oikp_get_largest( $objects, $field ) {
+  //bw_trace2();
   $largest = "";
-  if ( count( $objects ) ) {
+  if ( is_array( $objects ) && count( $objects ) ) {
     foreach ( $objects as $object ) {
       $value = $object->$field;
       if ( version_compare( $value, $largest ) ) {
@@ -466,7 +467,7 @@ function oikp_get_largest( $objects, $field ) {
 function oikp_get_compatibility( $version, $version_string ) {
   $tested = get_the_terms( $version->ID, "compatible_up_to" );
   $compatibility = array();
-  if ( !is_WP_error( $tested ) && count( $tested ) ) {
+  if ( !is_WP_error( $tested ) && is_array( $tested) && count( $tested ) ) {
     foreach ( $tested as $object ) {
       $wordpress_version = $object->name;
       $compatibility[ $wordpress_version ] = array( $version_string => array( 100, 1, 1  ) );
@@ -488,8 +489,9 @@ function oikp_get_tested( $version ) {
     //$tested = get_the_term_list( $version->ID, "compatible_up_to", "", ",", "" );
     //$tested = bw_return_field( "_oikpv_tested", $tested );
     $tested2 = get_the_terms( $version->ID, "compatible_up_to" );
+    //bw_trace2( $tested2, "tested2" );
     $tested = oikp_get_largest( $tested2, "name" );
-    bw_trace2( $tested2, "tested2" );
+    //bw_trace2( $tested, "tested" );
   }  
   else
     $tested = null;
@@ -612,6 +614,8 @@ function bw_get_author_profile( $post ) {
 
 /**
  * Return the defined FAQ page for the plugins server
+ *
+ * @param ID $post - 
  */
 function oikp_get_FAQ( $post ) {
   oik_require( "admin/oik-admin.inc" );
@@ -626,12 +630,30 @@ function oikp_get_FAQ( $post ) {
 }
 
 /**
+ * Return the sections for the plugin version
+ *
+ * - Description comes from the excerpt
+ * - Changelog comes from the plugin version
+ * - Info - comes from the FAQ, if defined or the default oik documentation
+ *
+ * Shortcodes are expanded. 
+ * 
+ * @todo But note that some shortcodes (e.g. [bw_fields featured] ) are not happy to expand if is_single() returns false
+ * which is what currently happens since we don't intercept the original wp_query.
+ * 
+ * Three options: 
+ * 1. Force is_single() to return true
+ * 2. Perform the interception
+ * 3. Change the logic around is_single() 
+ *  
+ * 
  */
 function oikp_get_sections( $post, $version ) {
+  do_action( "oik_add_shortcodes" );
   $sections = array();
-  $sections['description'] = bw_excerpt( $post );
-  $sections['changelog' ] = $version->post_content;
-  $sections['info'] = oikp_get_FAQ( $post );
+  $sections['description'] = do_shortcode( bw_excerpt( $post ));
+  $sections['changelog' ] = do_shortcode( $version->post_content );
+  $sections['info'] = do_shortcode( oikp_get_FAQ( $post ));
   return( $sections ); 
 } 
 

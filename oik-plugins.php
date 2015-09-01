@@ -4,12 +4,12 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.14
+Version: 1.15
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 License: GPL2
 
-    Copyright 2012-2014 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012-2015 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -47,24 +47,34 @@ function oikp_plugin_rewrite() {
   
   add_rewrite_tag( "%oik-banner%", '([^/]+)' ); 
   add_permastruct( 'oik-banner', 'banner/%oik-banner%' );
+  
+  //add_rewrite_tag( "%oik-tab%", '([^/]+)' );
+  //add_permastruct( 'oik-plugins-tab', 'oik-plugins//%oik-tab%' );
 }
 
 /**
  * Handle the plugins/%oik-plugin% request
+ *
+ * Ignore query_var="oik-plugin" when oik-tab is set
  */
 function oikp_template_redirect() {
-  $oik_plugin = get_query_var( "oik-plugin" );
-  //bw_trace2( $oik_plugin, "oik-plugin", false );
-  if ( $oik_plugin ) {
-    oik_require( "feed/oik-plugins-feed.php", "oik-plugins" );
-    oikp_lazy_redirect( $oik_plugin ); 
-  }
-  $oik_banner = get_query_var( "oik-banner" );
-  //bw_trace2( $oik_banner, "oik-banner", false );
-  if ( $oik_banner ) {
-    oik_require( "feed/oik-banner-feed.php", "oik-plugins" );
-    oikp_lazy_redirect_banner( $oik_banner );
-  }
+  $oik_tab = get_query_var( "oik-tab" );
+  if ( $oik_tab ) {
+    bw_trace2( $oik_tab, "oik-tab" );
+  } else {
+    $oik_plugin = get_query_var( "oik-plugin" );
+    //bw_trace2( $oik_plugin, "oik-plugin", false );
+    if ( $oik_plugin ) {
+      oik_require( "feed/oik-plugins-feed.php", "oik-plugins" );
+      oikp_lazy_redirect( $oik_plugin ); 
+    }
+    $oik_banner = get_query_var( "oik-banner" );
+    //bw_trace2( $oik_banner, "oik-banner", false );
+    if ( $oik_banner ) {
+      oik_require( "feed/oik-banner-feed.php", "oik-plugins" );
+      oikp_lazy_redirect_banner( $oik_banner );
+    }
+  }  
    
 }
 
@@ -576,35 +586,6 @@ function oikp_handle_upload( $file, $action ) {
 }
 
 /**
- * Automatically add the table of version information for a FREE or Premium oik plugin
- * 
- *  [bw_table post_type="oik_pluginversion" fields="title,excerpt,_oikpv_version" meta_key="_oikpv_plugin" meta_value=89 orderby=date order=DESC]
- */
-function oikp_tabulate_pluginversion( $post ) {
-  $version_type = get_post_meta( $post->ID, "_oikp_type", true );
-  
-  // $versions = array( null, null, "oik_pluginversion", "oik_premiumversion", null, null, "oik_pluginversion" );
-  $versions = bw_plugin_post_types();
-  $post_type = bw_array_get( $versions, $version_type, null ); 
-  if ( $post_type ) {
-    //$additional_content = "<!--nextpage-->";
-    $additional_content = "[bw_table";
-    $additional_content .= kv( "post_type", $post_type );
-    
-    $additional_content .= kv( "fields", "title,excerpt,_oikpv_version" );
-    $additional_content .= kv( "meta_key", "_oikpv_plugin" );
-    $additional_content .= kv( "meta_value", $post->ID );
-    $additional_content .= kv( "orderby", "date" );
-    $additional_content .= kv( "order", "DESC" );
-    $additional_content .= kv( "posts_per_page", "." );
-    $additional_content .= "]";
-  } else {
-    $additional_content = null;
-  }     
-  return( $additional_content ); 
-}
-
-/**
  * Add some content before 'the_content' filtering
  * 
  * @param post $post
@@ -622,18 +603,17 @@ function oikp_the_post_oik_plugins( $post, $content ) {
     $additional_content .= "']";
     //  gobang();
   }
-  /* @TODO - these should go into a bottom widget   if ( is_single() ) {
-    $additional_content = "[nivo post_type=screenshot:$slug]";
-  } 
-  */
 
   if ( is_single() ) {
-    $additional_content .= oikp_tabulate_pluginversion( $post );
+    oik_require( "includes/oik-plugins-content.php", "oik-plugins" );
+    $content = oikp_additional_content( $post, $slug );
+    // $content = $additional_content . $content;
   } else {
+    $content .= $additional_content;
   }  
   //bw_trace2( $additional_content, "additional content" );
   do_action( "oik_add_shortcodes" );
-  return( $additional_content );
+  return( $content );
 }
 
 /**
@@ -673,7 +653,8 @@ function oikp_the_content( $content ) {
   if ( $post ) {
     switch ( $post->post_type ) {
       case "oik-plugins": 
-        $content .= oikp_the_post_oik_plugins( $post, $content );
+        
+        $content = oikp_the_post_oik_plugins( $post, $content );
         break;
           
       case "oik_pluginversion": 

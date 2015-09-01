@@ -3,13 +3,27 @@
 * Donate link: http://www.oik-plugins.com/oik/oik-donate/
 * Tags: plugins, server, FREE, premium, shortcodes
 * Requires at least: 3.9
-* Tested up to: 4.1
-* Stable tag: 1.14
+* Tested up to: 4.1.1
+* Stable tag: 1.15
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description 
 oik-plugins server for FREE and Premium oik-plugins
+
+Changes in v1.15
+
+The oik-plugin details are displayed in a set of tabs, similar to wordpress.org
+
+* Description - (default tab) - shows the content of the oik-plugin
+* FAQ - Accordion of oik-FAQs
+* Screenshots - nivo slide show of the screenshot-n. files
+* Changelog - table of oik-plugin versions
+* Shortcodes - list of shortcodes
+* API Ref - API Reference using [apiref] shortcode
+* Documentation - List of pages and posts related through the '_plugin_ref' field
+
+The information displayed on the plugin update page now expands shortcodes.
 
 
 ## Installation 
@@ -35,6 +49,9 @@ Yes - see above
 
 
 ## Upgrade Notice 
+# 1.15 
+Changes to enable performance improvements on oik-plugins.com
+
 # 1.14 
 Now checks upgrade requests for a set of plugins
 
@@ -107,6 +124,13 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 
 ## Changelog 
+# 1.15 
+* Changed: Processing of "the_content" for oik-plugins is now implemented in includes/oik-plugins-content.php
+* Added: oik-tab query arg used to select the tab. Not yet implemented using rewrite rules
+* Changed: Shortcodes are expanded in the response to requests for plugin info
+* Fixed: Better handling of missing compatibility & required version tags.
+* Added: CSS to style the tabs for oik-plugins
+
 # 1.14 
 * Changed: Added action=check-these to allow multiple plugins to be checked in one request
 * Added: Implemented using oikp_perform_update_check()
