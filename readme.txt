@@ -3,13 +3,17 @@ Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
 Requires at least: 3.9                               
-Tested up to: 4.1.1
-Stable tag: 1.15
+Tested up to: 4.3-beta3
+Stable tag: 1.15.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 oik-plugins server for FREE and Premium oik-plugins
+
+Changes in v1.15.1
+
+* [oikp_download] now works for the current oik_pluginversion
 
 Changes in v1.15
 
@@ -49,6 +53,9 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.15.1 = 
+Implements changes to enable transition to the genesis-oik theme on oik-plugins.com
+
 = 1.15 = 
 Changes to enable performance improvements on oik-plugins.com
 
@@ -124,6 +131,16 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 
 == Changelog ==
+= 1.15.1 =
+* Changed: [oikp_download] shortcode now allows download of a previous plugin version
+* Changed: [oikp_download] shortcode will not display "Unknown plugin" if plugin='.'
+* Changed: oik-plugins.css now supports the Genesis framework
+* Changed: Improved some docblock comments
+* Changed: oikp_display_screenshots() add [nivo] shortcode parameters: caption=n link=n 
+* Changed: oikp_display_documentation() tests for '_oik_doc_home' post meta data
+* Changed: Uses oik_require_lib( "bobbfunc" ) for deferred text translations - bw_dtt()
+* Depends: on oik v2.6-beta.0722 or higher
+
 = 1.15 = 
 * Changed: Processing of "the_content" for oik-plugins is now implemented in includes/oik-plugins-content.php
 * Added: oik-tab query arg used to select the tab. Not yet implemented using rewrite rules

@@ -1,0 +1,143 @@
+# Copyright (C) 2015 oik plugins server
+# This file is distributed under the same license as the oik plugins server package.
+msgid ""
+msgstr ""
+"Project-Id-Version: oik plugins server 1.15.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/oik-plugins\n"
+"POT-Creation-Date: 2015-07-22 14:58:44+00:00\n"
+"MIME-Version: 1.0\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+"Language: bb_BB\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+#: admin/oik-plugins.php:42
+msgid "plugins server settings"
+msgstr "plniugs seevrr sgntties"
+
+#: admin/oik-plugins.php:43
+msgid "Defaults"
+msgstr "Dtfueals"
+
+#: admin/oik-plugins.php:44
+msgid "Status"
+msgstr "Sttuas"
+
+#: admin/oik-plugins.php:57
+msgid "Folder for premium plugins"
+msgstr "Feodlr fOr pumriem pinlgus"
+
+#: admin/oik-plugins.php:58
+msgid "API key"
+msgstr "API kEy"
+
+#: admin/oik-plugins.php:162 oik-plugins.php:369 oik-plugins.php:393
+msgid "Plugin"
+msgstr "Pgliun"
+
+#: admin/oik-plugins.php:164 oik-plugins.php:394
+msgid "Downloads"
+msgstr "Daowondls"
+
+#: admin/oik-plugins.php:165 oik-plugins.php:395
+msgid "Updates"
+msgstr "Utadeps"
+
+#: admin/oik-plugins.php:166
+msgid "Totals"
+msgstr "Ttaols"
+
+#: oik-plugins.php:211
+msgid "Plugin type"
+msgstr "Puilgn tpye"
+
+#: oik-plugins.php:212
+msgid "Plugin slug"
+msgstr "Puilgn sulg"
+
+#: oik-plugins.php:213
+msgid "Plugin name"
+msgstr "Pulgin nmae"
+
+#: oik-plugins.php:214
+msgid "Description"
+msgstr "Dretpioscin"
+
+#: oik-plugins.php:215
+msgid "GitHub repository"
+msgstr "GtiuHb rotpesoriy"
+
+#: oik-plugins.php:224
+msgid "Purchasable product"
+msgstr "Pushbaacrle pudcrot"
+
+#: oik-plugins.php:271
+msgid "Type"
+msgstr "Tpye"
+
+#: oik-plugins.php:272
+msgid "Slug"
+msgstr "Sulg"
+
+#: oik-plugins.php:273
+msgid "Name"
+msgstr "Nmae"
+
+#: oik-plugins.php:274
+msgid "Product"
+msgstr "Pdruoct"
+
+#: oik-plugins.php:370 oik-plugins.php:392 oik-plugins.php:414
+msgid "Version"
+msgstr "Vrosien"
+
+#: oik-plugins.php:377
+msgid "Download count"
+msgstr "Dowaonld cnout"
+
+#: oik-plugins.php:378
+msgid "Update count"
+msgstr "Utapde count"
+
+#: oik-plugins.php:603 shortcodes/oik-plugins.php:45
+msgid "Download"
+msgstr "Dalwnood"
+
+#: shortcodes/oik-plugins.php:50
+msgid "version"
+msgstr "vriseon"
+
+#: shortcodes/oik-plugins.php:73
+msgid "Download %1$s from wordpress.org"
+msgstr "Daowlond %1$s form wpdoserrs.Org"
+
+#: shortcodes/oik-plugins.php:205
+msgid "plugin"
+msgstr "puigln"
+
+#: shortcodes/oik-plugins.php:205
+msgid "name of the plugin"
+msgstr "nmae Of thE pugiln"
+
+#. Plugin Name of the plugin/theme
+msgid "oik plugins server"
+msgstr "OIk pulgnis srever"
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.oik-plugins.com/oik-plugins/oik-plugins"
+msgstr "http://www.oik-plugins.com/oik-plugins/oik-plugins"
+
+#. Description of the plugin/theme
+msgid "oik plugins server for premium and free(mium) oik plugins"
+msgstr "OIk plunigs sevrer fOr puremim And free(muim) OIk puiglns"
+
+#. Author of the plugin/theme
+msgid "bobbingwide"
+msgstr "bgionbidbwe"
+
+#. Author URI of the plugin/theme
+msgid "http://www.oik-plugins.com/author/bobbingwide"
+msgstr "http://www.oik-plugins.com/author/bobbingwide"
+

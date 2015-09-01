@@ -139,7 +139,6 @@ function oikp_display_faq( $post ) {
   $id = $post->ID;
   return( "[bw_accordion post_type=oik-faq meta_key=_plugin_ref meta_value=$id format=TEM]" );
 } 
-
  
 /**
  * Display the screenshots for the plugin
@@ -150,7 +149,7 @@ function oikp_display_faq( $post ) {
  * 
  */
 function oikp_display_screenshots( $post, $slug ) {
-  $additional_content = "[nivo post_type=screenshot:$slug]";
+  $additional_content = "[nivo post_type=screenshot:$slug caption=n link=n]";
   return( $additional_content ); 
 }
 
@@ -193,7 +192,12 @@ function oikp_display_apiref( $post, $slug ) {
  */
  
 function oikp_display_documentation( $post, $slug ) {
-  $additional_content = "[bw_related post_type='page,post' meta_key=_plugin_ref posts_per_page=. orderby=title order=asc ]";
+  $post_id = get_post_meta( $post->ID, "_oik_doc_home", true );
+  if ( $post_id ) {
+    $additional_content = "[bw_tree post_type=page post_parent=$post_id posts_per_page=.]";
+  } else {
+    $additional_content = "[bw_related post_type='page,post' meta_key=_plugin_ref posts_per_page=. orderby=title order=asc ]";
+  }    
   return( $additional_content ); 
 }
   

@@ -4,7 +4,7 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.15
+Version: 1.15.1
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 License: GPL2
@@ -50,6 +50,7 @@ function oikp_plugin_rewrite() {
   
   //add_rewrite_tag( "%oik-tab%", '([^/]+)' );
   //add_permastruct( 'oik-plugins-tab', 'oik-plugins//%oik-tab%' );
+  //add_rewrite_rule( "oik-plugins/([^/]+)/?([^/]+)?", 'index.php?post_type=oik-plugins&postname=$matches[1]&oik-tab=$matches[2]' );
 }
 
 /**
@@ -199,12 +200,14 @@ function oik_register_oik_plugin() {
   $post_type_args['has_archive'] = true;
   $post_type_args['menu_icon'] = 'dashicons-admin-plugins';
   bw_register_post_type( $post_type, $post_type_args );
+	
+	if ( oik_require_lib( "bobbfunc" ) ) {
   
 
   bw_dtt( "_oikp_slug", "plugin folder name (e.g. oik)" );
   $oikp_name = bw_dtt( "_oikp_name", "plugin file name (e.g. oik/oik.php)" );
   $oikp_git = bw_dtt( "_oikp_git", "GitHub repository name (e.g. bobbingwide/oik)");
-  
+  }
   bw_register_field( "_oikp_type", "select", "Plugin type", array( '#options' => bw_plugin_types() ) ); 
   bw_register_field( "_oikp_slug", "text", "Plugin slug", array( '#hint' => "_oikp_slug" ) ); 
   bw_register_field( "_oikp_name", "text", "Plugin name", array( '#hint' => $oikp_name ) ); 
@@ -783,7 +786,7 @@ function oikp_oik_validate_apikey( $return_value, $apikey ) {
   } else {
     $return_value = null; 
   } 
-  bw_trace2();   
+  // bw_trace2();   
   return( $return_value );
 }
 
@@ -797,6 +800,7 @@ add_filter( "oik_validate_apikey", "oikp_oik_validate_apikey", 10, 2 );
  * oik-plugins is now dependent upon oik v2.1 and oik-fields v1.33
  * oik-plugins is now dependent upon oik v2.2 and oik-fields v1.36
  * oik-plugins is now dependent upon oik v2.3 and oik-fields v1.39
+ * oik-plugins v1.15.1 is now dependent upon v2.6 and oik-fields v1.40
  */ 
 function oikp_activation() {
   static $plugin_basename = null;
@@ -807,6 +811,6 @@ function oikp_activation() {
       require_once( "admin/oik-activation.php" );
     }  
   }  
-  $depends = "oik-fields:1.39,oik:v2.3";
+  $depends = "oik-fields:1.40,oik:v2.6-beta.0722";
   oik_plugin_lazy_activation( __FILE__, $depends, "oik_plugin_plugin_inactive" );
 }

@@ -1,7 +1,7 @@
 <?php
 /*
 
-    Copyright 2012-2014 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012-2015 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -22,6 +22,9 @@
 
 /**
  * Define oik plugin server settings
+ *
+ * Settings are saved in 'bw_plugins_server'
+ * Users with 'manage_options' can update them
  */
 function oikp_lazy_admin_menu() {
   register_setting( 'oik_plugins_server', 'bw_plugins_server', 'oik_plugins_validate' ); // No validation for oik-plugins
@@ -30,7 +33,11 @@ function oikp_lazy_admin_menu() {
 
 /**
  * oik plugins server settings
-*/
+ * 
+ * Display two boxes
+ * 1. The settings
+ * 2. The download / updates status totalled by plugin
+ */
 function oik_plugins_options_do_page() {
   oik_menu_header( "plugins server settings", "w90pc" );
   oik_box( NULL, NULL, "Defaults", "oik_plugins_server_options" );
@@ -41,6 +48,8 @@ function oik_plugins_options_do_page() {
 
 /**
  * Display the oik-plugins server options
+ * 
+ * 
  */
 function oik_plugins_server_options() {
   $option = 'bw_plugins_server'; 
@@ -75,6 +84,9 @@ function oik_plugins_status() {
 
 /**
  * Accumulate the figures for the plugin version
+ *
+ * @param object $post - the post object ( plugin version )
+ * @param string $plugin - the plugin slug
  */ 
 function oik_plugins_accumulate_version( $post, $plugin ) {
   $version = get_post_meta( $post->ID, "_oikpv_version", true );

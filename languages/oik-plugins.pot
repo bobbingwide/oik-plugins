@@ -1,0 +1,141 @@
+# Copyright (C) 2015 oik plugins server
+# This file is distributed under the same license as the oik plugins server package.
+msgid ""
+msgstr ""
+"Project-Id-Version: oik plugins server 1.15.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/oik-plugins\n"
+"POT-Creation-Date: 2015-07-22 14:58:44+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/oik-plugins.php:42
+msgid "plugins server settings"
+msgstr ""
+
+#: admin/oik-plugins.php:43
+msgid "Defaults"
+msgstr ""
+
+#: admin/oik-plugins.php:44
+msgid "Status"
+msgstr ""
+
+#: admin/oik-plugins.php:57
+msgid "Folder for premium plugins"
+msgstr ""
+
+#: admin/oik-plugins.php:58
+msgid "API key"
+msgstr ""
+
+#: admin/oik-plugins.php:162 oik-plugins.php:369 oik-plugins.php:393
+msgid "Plugin"
+msgstr ""
+
+#: admin/oik-plugins.php:164 oik-plugins.php:394
+msgid "Downloads"
+msgstr ""
+
+#: admin/oik-plugins.php:165 oik-plugins.php:395
+msgid "Updates"
+msgstr ""
+
+#: admin/oik-plugins.php:166
+msgid "Totals"
+msgstr ""
+
+#: oik-plugins.php:211
+msgid "Plugin type"
+msgstr ""
+
+#: oik-plugins.php:212
+msgid "Plugin slug"
+msgstr ""
+
+#: oik-plugins.php:213
+msgid "Plugin name"
+msgstr ""
+
+#: oik-plugins.php:214
+msgid "Description"
+msgstr ""
+
+#: oik-plugins.php:215
+msgid "GitHub repository"
+msgstr ""
+
+#: oik-plugins.php:224
+msgid "Purchasable product"
+msgstr ""
+
+#: oik-plugins.php:271
+msgid "Type"
+msgstr ""
+
+#: oik-plugins.php:272
+msgid "Slug"
+msgstr ""
+
+#: oik-plugins.php:273
+msgid "Name"
+msgstr ""
+
+#: oik-plugins.php:274
+msgid "Product"
+msgstr ""
+
+#: oik-plugins.php:370 oik-plugins.php:392 oik-plugins.php:414
+msgid "Version"
+msgstr ""
+
+#: oik-plugins.php:377
+msgid "Download count"
+msgstr ""
+
+#: oik-plugins.php:378
+msgid "Update count"
+msgstr ""
+
+#: oik-plugins.php:603 shortcodes/oik-plugins.php:45
+msgid "Download"
+msgstr ""
+
+#: shortcodes/oik-plugins.php:50
+msgid "version"
+msgstr ""
+
+#: shortcodes/oik-plugins.php:73
+msgid "Download %1$s from wordpress.org"
+msgstr ""
+
+#: shortcodes/oik-plugins.php:205
+msgid "plugin"
+msgstr ""
+
+#: shortcodes/oik-plugins.php:205
+msgid "name of the plugin"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "oik plugins server"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.oik-plugins.com/oik-plugins/oik-plugins"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "oik plugins server for premium and free(mium) oik plugins"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "bobbingwide"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.oik-plugins.com/author/bobbingwide"
+msgstr ""
