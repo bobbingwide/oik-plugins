@@ -179,6 +179,16 @@ function oikp_display_apiref( $post, $slug ) {
 
 /**
  * Display the documentation for the plugin
+ *
+ * Only use _oik_doc_home if 
+ * - the field is defined for the post type
+ * - the value is non null
+ * - it's a valid page
+ * 
+ * Otherwise - make it up using the bw_related shortcode
+ * 
+ * This is how it used to be when displayed in the sidebar widget area
+ * `
  * Pages
  * [bw_related post_type=page meta_key=_plugin_ref posts_per_page=5 ] - temporarily disabled 2015/03/15
  * 
@@ -186,14 +196,27 @@ function oikp_display_apiref( $post, $slug ) {
  * 
  * Posts
  * [bw_related post_type=post meta_key=_plugin_ref posts_per_page=5 ] - temporarily disabled 2015/03/15
- *
- * Examples
- * Tutorials
+ * `
  */
- 
 function oikp_display_documentation( $post, $slug ) {
-  $post_id = get_post_meta( $post->ID, "_oik_doc_home", true );
+	$field_names = bw_get_field_names( $post->ID );
+	//bw_trace2( $field_names, "field_names" );
+	if ( bw_array_get( bw_assoc( $field_names) , "_oik_doc_home", false ) ) {
+		$post_id = get_post_meta( $post->ID, "_oik_doc_home", true );
+		if ( $post_id ) {
+			oik_require( "includes/bw_posts.inc" );
+			$post = bw_get_post( $post_id, "page" );
+			if ( !$post ) {
+				bw_trace2( $post_id, "Invalid ID for _oik_doc_home" );
+				$post_id = null;
+			}
+		}
+	} else {
+		$post_id =  null;
+	}
+	bw_trace2( $post_id, "post_id for _oik_doc_home", false );
   if ( $post_id ) {
+		
     $additional_content = "[bw_tree post_type=page post_parent=$post_id posts_per_page=.]";
   } else {
     $additional_content = "[bw_related post_type='page,post' meta_key=_plugin_ref posts_per_page=. orderby=title order=asc ]";
