@@ -3,8 +3,8 @@ Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
 Requires at least: 3.9                               
-Tested up to: 4.0
-Stable tag: 1.13
+Tested up to: 4.1
+Stable tag: 1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,9 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.14 =
+Now checks upgrade requests for a set of plugins
+
 = 1.13 =
 Tested with WordPress 4.0. Required for improved results for [bw_table]
 
@@ -104,6 +107,13 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 
 == Changelog ==
+= 1.14 = 
+* Changed: Added action=check-these to allow multiple plugins to be checked in one request
+* Added: Implemented using oikp_perform_update_check() 
+* Changed: oikp_update_check() now uses the new function oikp_perform_update_check()
+* Changed: Default banner image is now a .png file
+* Changed: Post types now registered with additional post type support: revisions, author, publicize and home 
+
 = 1.13 = 
 * Changed: Responses to "oik_table_fields_$post_type" filter now include "title" and "excerpt"
 * Changed: No longer responds to "oik_table_titles_$post_type" filter

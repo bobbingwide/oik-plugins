@@ -4,9 +4,9 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.13
+Version: 1.14
 Author: bobbingwide
-Author URI: http://www.bobbingwide.com
+Author URI: http://www.oik-plugins.com/author/bobbingwide
 License: GPL2
 
     Copyright 2012-2014 Bobbing Wide (email : herb@bobbingwide.com )
@@ -184,7 +184,7 @@ function oik_register_oik_plugin() {
   $post_type_args = array();
   $post_type_args['label'] = 'oik plugins';
   $post_type_args['description'] = 'oik plugin';
-  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt' );
+  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
   $post_type_args['taxonomies'] = array( "oik_tags" );
   $post_type_args['has_archive'] = true;
   $post_type_args['menu_icon'] = 'dashicons-admin-plugins';
@@ -337,6 +337,8 @@ function oik_register_oik_pluginversion() {
   $post_type_args['taxonomies'] = array( "required_version", "compatible_up_to" );
   
   $post_type_args['menu_icon'] = 'dashicons-shield';
+  
+  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
   bw_register_post_type( $post_type, $post_type_args );
   
   oik_register_oik_pluginversion_fields( $post_type );
@@ -415,6 +417,7 @@ function oik_register_oik_premiumversion() {
   $post_type_args['description'] = 'oik premium plugin version';
   $post_type_args['taxonomies'] = array( "required_version", "compatible_up_to" );
   $post_type_args['menu_icon'] = 'dashicons-shield-alt';
+  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
   bw_register_post_type( $post_type, $post_type_args );
   oik_register_oik_pluginversion_fields( $post_type );
 }

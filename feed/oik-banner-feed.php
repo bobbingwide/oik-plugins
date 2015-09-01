@@ -27,6 +27,8 @@ License: GPL2
  *
  * If we simply echo the thumbnail this is fine for when the request is for the URL alone
  * but when the browser wants an image we need to return the actual image
+ * 
+ * Note: We now deliver a .png file - it's smaller than the .jpg
  * @uses exit()
  *
  * @param string $oik_plugin - the plugin slug 
@@ -52,12 +54,11 @@ function oikp_lazy_redirect_banner( $oik_plugin ) {
     bw_trace2( "Invalid plugin slug" ); 
   }
   if ( !$thumbnail ) {
-    $thumbnail = oik_path( "images/oik-plugins-banner-772x250.jpg", "oik-plugins" );
+    $thumbnail = oik_path( "images/oik-plugins-banner-772x250.png", "oik-plugins" );
   }  
   oikp_force_image( $thumbnail );
   exit();
 }
-
 
 /**
  * Force the download of an image

@@ -153,7 +153,7 @@ function oikp_force_download( $file ) {
 /**
  * Perform oikp_update_check
  * 
- * @param string $oik_plugin_action - expected to be "update_check"
+ * @param string $oik_plugin_action - expected to be "update-check"
  */
 function _oikp_lazy_redirect_update_check( $oik_plugin_action ) {
   oikp_update_check( $oik_plugin_action );
@@ -169,6 +169,93 @@ function _oikp_lazy_redirect_info( $oik_plugin_action ) {
 }
 
 /**
+ * Perform oikp_check_these 
+ *
+ * Given an array of plugins and their current versions to check
+ * create a response indicating which of them have new versions.
+ * Don't return any WP_errors
+ *
+ * @param string $oik_plugin_action - expected to be "check-these"
+ */
+function _oikp_lazy_redirect_check_these( $oik_plugin_action ) {
+  bw_trace2();
+  $response = array();
+  $action = bw_array_get( $_REQUEST, "action", null );
+  if ( $action == $oik_plugin_action ) {
+    $check = bw_array_get( $_REQUEST, "check", null );
+    if ( $check ) {
+      $check = stripslashes( $check ); 
+      bw_trace2( $check, "check", false ); 
+      $check_these = unserialize( $check );
+      
+      bw_trace2( $check_these, "check_these", false );
+      
+      $checked = bw_array_get( $check_these, "checked", null );  
+      bw_trace2( $checked, "checked", false );
+      foreach ( $checked as $plugin => $version ) {
+        $result = oikp_perform_update_check( $plugin, $version );
+        bw_trace2( $result, "result", false );
+        if ( $result ) {
+          $response[$plugin] = $result;
+        }
+      }
+    }
+  }
+  $toecho = serialize( $response ); 
+  bw_trace2( $toecho, "toecho" );
+  echo $toecho;
+}
+
+/**
+ * Check for a version or new version
+ *
+ * @param string $plugin - the plugin to check 
+ * @param string $current_version - current version to check against
+ * @return stdClass - 
+ * 
+ */
+function oikp_perform_update_check( $plugin, $current_version=null ) {
+  $response = new stdClass;
+  //$version = bw_array_get( $_REQUEST, "version", null );
+  oik_require( "admin/oik-admin.inc" );
+   
+  $slug = bw_get_slug( $plugin );   
+  $post = oikp_load_plugin( $slug );
+  if ( $post ) { 
+    $version = oikp_load_pluginversion( $post );
+    if ( $version ) { 
+      $response->slug = $slug;
+      $response->new_version = oikp_get_latestversion( $version );
+      if ( $current_version && version_compare( $response->new_version, $current_version, "<=" ) ) {
+        $response = null;
+      } else {
+        $response->url = "http://qw/wpit/oik_plugin/" . $slug;
+        $response->url = home_url( "/oik_plugin/" . $slug );
+        $response->plugin = get_post_meta( $post->ID, "_oikp_name", true );
+       
+        $apikey = bw_array_get( $_REQUEST, "apikey", null );
+      
+        $package = oikp_get_package( $post, $version, $response->new_version, $apikey );
+        if ( $package ) {  
+          $response->package = $package; 
+        } else { 
+          $response = bw_wp_error( "not-found", "Package not found" );
+        }
+      }      
+    } else {
+      $response = bw_wp_error( "not-found", "Version not found" );
+    }  
+  } else {
+    $response = bw_wp_error( "not-found", "Plugin not found" );  
+  }
+  
+  if ( $current_version && is_wp_error( $response ) ) {
+    $response = null;
+  }
+  return( $response );
+} 
+
+/**
  * Invoke the correct server function
  * 
  * Pretend it's AJAX so that we don't inadvertently echo 'wrong stuff' to the client
@@ -180,6 +267,7 @@ function oikp_lazy_redirect( $oik_plugin_action ) {
   }
   $funcname = bw_funcname( "_oikp_lazy_redirect", $oik_plugin_action );
   $funcname( $oik_plugin_action );
+  //session_write_close();
   exit();
 }
 
@@ -378,10 +466,12 @@ function oikp_get_largest( $objects, $field ) {
 function oikp_get_compatibility( $version, $version_string ) {
   $tested = get_the_terms( $version->ID, "compatible_up_to" );
   $compatibility = array();
-  foreach ( $tested as $object ) {
-    $wordpress_version = $object->name;
-    $compatibility[ $wordpress_version ] = array( $version_string => array( 100, 1, 1  ) );
-  } 
+  if ( !is_WP_error( $tested ) && count( $tested ) ) {
+    foreach ( $tested as $object ) {
+      $wordpress_version = $object->name;
+      $compatibility[ $wordpress_version ] = array( $version_string => array( 100, 1, 1  ) );
+    } 
+  }  
   return( $compatibility );
 } 
 
@@ -473,37 +563,8 @@ function oikp_update_check( $oik_plugin_action="update-check" ) {
   if ( $action == $oik_plugin_action ) {
     $plugin = bw_array_get( $_REQUEST, "plugin_name", null );
     if ( $plugin ) {
-      //$version = bw_array_get( $_REQUEST, "version", null );
-      oik_require( "admin/oik-admin.inc" );
-   
-      $slug = bw_get_slug( $plugin );   
-      $post = oikp_load_plugin( $slug );
-      if ( $post ) { 
-        $version = oikp_load_pluginversion( $post );
-        if ( $version ) { 
-          $response->slug = $slug;
-          $response->new_version = oikp_get_latestversion( $version );
-          $response->url = "http://qw/wpit/oik_plugin/" . $slug;
-          $response->url = home_url( "/oik_plugin/" . $slug );
-          $response->plugin = get_post_meta( $post->ID, "_oikp_name", true );
-          
-          $apikey = bw_array_get( $_REQUEST, "apikey", null );
-          
-          $package = oikp_get_package( $post, $version, $response->new_version, $apikey );
-          if ( $package ) {  
-            $response->package = $package; 
-          } else { 
-            $response = bw_wp_error( "not-found", "Package not found" );
-          }    
-        } else {
-          $response = bw_wp_error( "not-found", "Version not found" );
-        }  
-      } else {
-        $response = bw_wp_error( "not-found", "Plugin not found" );  
-      }
-        
+      $response = oikp_perform_update_check( $plugin ); 
     }
-     
   } else {
     $response = bw_wp_error( "invalid-action", "Invalid action $action" );
   }
