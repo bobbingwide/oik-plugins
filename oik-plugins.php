@@ -4,7 +4,7 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.12
+Version: 1.13
 Author: bobbingwide
 Author URI: http://www.bobbingwide.com
 License: GPL2
@@ -40,6 +40,7 @@ function oikp_plugin_rewrite() {
   add_permastruct( 'oik-plugin', 'plugins/%oik-plugin%' );
   add_action( "template_redirect", "oikp_template_redirect" ); 
   add_filter( "wp_handle_upload", "oikp_handle_upload", 10, 2 );
+  add_filter( "posts_request", "oikp_posts_request", 10, 2 );
   
   // Handle
    http://oik-plugins.co.uk/plugins/download?plugin=oik-often-included-key-information-kit&version=1.17.1002.1444&id=245&action=update
@@ -59,12 +60,46 @@ function oikp_template_redirect() {
     oikp_lazy_redirect( $oik_plugin ); 
   }
   $oik_banner = get_query_var( "oik-banner" );
-  bw_trace2( $oik_banner, "oik-banner", false );
+  //bw_trace2( $oik_banner, "oik-banner", false );
   if ( $oik_banner ) {
     oik_require( "feed/oik-banner-feed.php", "oik-plugins" );
     oikp_lazy_redirect_banner( $oik_banner );
   }
    
+}
+
+/** 
+ * Implement "posts_request" filter to intercept the main query 
+ * 
+ * In {@link http://wordpress.stackexchange.com/questions/98326/disable-the-mysql-query-in-the-main-query}
+ * there are a number of recommendations.... 
+ * just return nothing in the $request or 
+ * handle 'posts_where' and set 'AND 1=0' to cause the SQL to return nothing
+ * 
+ * In this case we're looking for a query_var of "oik-plugin" which will be set when the request is /plugins/update-check
+ * Can we also check for the "oik-banner" query_var and achieve the same thing?
+ * 
+ * Can we remove the filter for ANY invocation, or only when it's the main query or when we've decided to intercept the query.
+ * What does that mean when WooCommerce is doing its nasty stuff with webhooks?
+ *
+ */
+function oikp_posts_request( $request, $query ) {
+  $oik_plugin = get_query_var( "oik-plugin" );
+  if ( $oik_plugin ) {
+    //bw_trace2();
+    //bw_backtrace();
+    //oikp_template_redirect();
+    $request = null;
+  } else {
+    $oik_banner = get_query_var( "oik-banner" );
+    if ( $oik_banner ) {
+      $request = null;
+    }
+  }
+  if ( !$request ) {
+    remove_filter( "posts_request", "oikp_posts_request" );
+  }  
+  return( $request );
 }
 
 add_action( 'oik_fields_loaded', 'oikp_init' );
@@ -197,7 +232,8 @@ function bw_function_namify( $name ) {
   $name = str_replace( ' ', '_', $name );
   $name = str_replace( '-', '_', $name );
   $name = strtolower( $name );
-  return( bw_trace2( $name ) ); 
+  //bw_trace2( $name );
+  return( $name ); 
 }
 } 
 
@@ -211,7 +247,7 @@ function oikp_columns_and_titles( $post_type ) {
   add_filter( "manage_edit-${post_type}_columns", "${post_type_namify}_columns", 10, 2 );
   add_action( "manage_${post_type}_posts_custom_column", "bw_custom_column_admin", 10, 2 );
   add_filter( "oik_table_fields_${post_type}", "${post_type_namify}_fields", 10, 2 );
-  add_filter( "oik_table_titles_${post_type}", "${post_type_namify}_titles", 10, 3 ); 
+  //add_filter( "oik_table_titles_${post_type}", "${post_type_namify}_titles", 10, 3 ); 
 }
 }
 
@@ -231,6 +267,8 @@ function oik_plugins_columns( $columns, $arg2=null ) {
  * Return the fields to be displayed in a table
  */ 
 function oik_plugins_fields( $fields, $arg2 ) {
+  $fields['title'] = 'title';
+  $fields['excerpt'] = 'excerpt';
   $fields['_oikp_type'] = '_oikp_type';
   $fields['_oikp_slug'] = '_oikp_slug';
   $fields['_oikp_name'] = '_oikp_name' ;
@@ -347,6 +385,8 @@ function oik_pluginversion_columns( $columns, $args ) {
  * Return the fields to be displayed in a table
  */ 
 function oik_pluginversion_fields( $fields, $arg2 ) {
+  $fields['title'] = 'title';
+  $fields['excerpt'] = 'excerpt';
   $fields['_oikpv_version'] = '_oikpv_version' ;
   return( $fields );
 }
@@ -388,6 +428,8 @@ function oik_premiumversion_columns( $columns, $args ) {
  * Return the fields to be displayed in a table
  */ 
 function oik_premiumversion_fields( $fields, $arg2 ) {
+  $fields['title'] = 'title';
+  $fields['excerpt'] = 'excerpt';
   $fields['_oikpv_version'] = '_oikpv_version' ;
   return( $fields );
 }
@@ -400,7 +442,9 @@ function oik_premiumversion_titles( $titles, $arg2, $fields=null ) {
 }
 
 /** 
- * Add the "oik_plugin" feed... don't know why! Herb 2012/07/27
+ * Add the "oik_plugin" feed
+ *
+ * @TODO ... don't know why! Herb 2012/07/27. Still not checked 2014/10/12
  */
 function oikp_plugin_add_feed() {
  $hook = add_feed( 'oik_plugin', "oikp_plugin_feed");
@@ -540,6 +584,7 @@ function oikp_tabulate_pluginversion( $post ) {
   $versions = bw_plugin_post_types();
   $post_type = bw_array_get( $versions, $version_type, null ); 
   if ( $post_type ) {
+    //$additional_content = "<!--nextpage-->";
     $additional_content = "[bw_table";
     $additional_content .= kv( "post_type", $post_type );
     
@@ -599,7 +644,7 @@ function oikp_the_post_oik_plugins( $post, $content ) {
  *
  */
 function oikp_the_post_oik_pluginversion( $post, $content ) {
-  bw_trace2();
+  // bw_trace2();
   if ( false === strpos( $post->post_content, "[bw_field" ) ) {
     $additional_content = "[bw_fields]";
   } else {
@@ -617,27 +662,85 @@ function oikp_the_post_oik_pluginversion( $post, $content ) {
  * 
  */
 function oikp_the_content( $content ) {
-  bw_backtrace();
+  //bw_backtrace();
   //static $recursed = false;
   //if ( !$recursed ) {
-    global $post;
-    bw_trace2( $post, "global post" );
-    if ( $post ) {
-      switch ( $post->post_type ) {
-        case "oik-plugins": 
-          $content .= oikp_the_post_oik_plugins( $post, $content );
-          break;
+  global $post;
+  //  bw_trace2( $post, "global post" );
+  if ( $post ) {
+    switch ( $post->post_type ) {
+      case "oik-plugins": 
+        $content .= oikp_the_post_oik_plugins( $post, $content );
+        break;
           
-        case "oik_pluginversion": 
-        case "oik_premiumversion":
-          $content .= oikp_the_post_oik_pluginversion( $post, $content ); 
-          break;  
-      }
-    }  
+      case "oik_pluginversion": 
+      case "oik_premiumversion":
+        $content .= oikp_the_post_oik_pluginversion( $post, $content ); 
+        break;  
+    }
+  }  
   //}  
-  //$recursed = true;  
+  //$recursed = true; 
+  //remove_annoying_filters();
+  //global $wp_filter;
+  //bw_trace2( $wp_filter, "wp_filter", false ); 
   return( $content );
 }
+
+/**
+ * Removed annoying filters
+ *
+ 
+                    [wptexturize] => Array
+                        (
+                            [function] => wptexturize
+                            [accepted_args] => 1
+                        )
+
+                    [convert_smilies] => Array
+                        (
+                            [function] => convert_smilies
+                            [accepted_args] => 1
+                        )
+
+                    [convert_chars] => Array
+                        (
+                            [function] => convert_chars
+                            [accepted_args] => 1
+                        )
+
+                    [wpautop] => Array
+                        (
+                            [function] => wpautop
+                            [accepted_args] => 1
+                        )
+
+                    [shortcode_unautop] => Array
+                        (
+                            [function] => shortcode_unautop
+                            [accepted_args] => 1
+                        )
+
+                    [prepend_attachment] => Array
+                        (
+                            [function] => prepend_attachment
+                            [accepted_args] => 1
+                        )
+
+                )
+ */
+ 
+function remove_annoying_filters() {
+  //remove_filter( 'the_content', 'wptexturize' );
+  //remove_filter( 'the_content', 'wpautop' );
+  //remove_filter( 'the_content', 'convert_smilies' );
+  //remove_filter( 'the_content', 'convert_chars' );
+  //remove_filter( 'the_content', 'shortcode_unautop' );
+  //remove_filter( 'the_content', 'prepend_attachment' );
+}
+
+
+
 
 /**
  * Implement "oik_admin_menu" for oik-plugins 
@@ -663,6 +766,22 @@ function bw_theme_field_text__oikp_git( $key, $value, $field ) {
  }  
  if ( $github ) {
    alink( "github", "http://github.com/$github", $github );
+ }  
+}
+  
+/**
+ * Theme the Purchasable product field to show FREE if not set
+ *
+ * @param string $key - the field name ( _oikp_prod )
+ * @param array $value - field values array
+ * @param array $field - field definition
+ */
+function bw_theme_field_noderef__oikp_prod( $key, $value, $field ) {
+ //bw_trace2();
+ if ( $value && $value[0] ) {
+   bw_theme_field_noderef( $key, $value, $field );
+ } else {
+   e( "FREE" );
  }  
 }  
 
@@ -693,6 +812,7 @@ add_filter( "oik_validate_apikey", "oikp_oik_validate_apikey", 10, 2 );
  * 
  * oik-plugins is now dependent upon oik v2.1 and oik-fields v1.33
  * oik-plugins is now dependent upon oik v2.2 and oik-fields v1.36
+ * oik-plugins is now dependent upon oik v2.3 and oik-fields v1.39
  */ 
 function oikp_activation() {
   static $plugin_basename = null;
@@ -703,6 +823,6 @@ function oikp_activation() {
       require_once( "admin/oik-activation.php" );
     }  
   }  
-  $depends = "oik-fields:1.36,oik:v2.2";
+  $depends = "oik-fields:1.39,oik:v2.3";
   oik_plugin_lazy_activation( __FILE__, $depends, "oik_plugin_plugin_inactive" );
 }

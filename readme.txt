@@ -2,9 +2,9 @@
 Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
-Requires at least: 3.5                               
-Tested up to: 3.9.1
-Stable tag: 1.12
+Requires at least: 3.9                               
+Tested up to: 4.0
+Stable tag: 1.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,9 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.13 =
+Tested with WordPress 4.0. Required for improved results for [bw_table]
+
 = 1.12 = 
 Now uses dashicons for oik-plugins, oik_pluginversion and oik_premiumversion
 
@@ -101,6 +104,14 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 
 == Changelog ==
+= 1.13 = 
+* Changed: Responses to "oik_table_fields_$post_type" filter now include "title" and "excerpt"
+* Changed: No longer responds to "oik_table_titles_$post_type" filter
+* Changed: Commented out some bw_trace2() and bw_backtrace() calls
+* Changed: Purchasable product field now shows FREE if not set
+* Fixed: oikp_load_pluginversion() to return the latest plugin version even if it's the current post.
+* Changed: Added filter hook for "posts_request" to intercept the main query in certain situations 
+
 = 1.12= 
 * Added: Dashicons 
 

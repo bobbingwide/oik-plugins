@@ -4,7 +4,7 @@ Author: bobbingwide
 Author URI: http://www.bobbingwide.com
 License: GPL2
 
-    Copyright 2012, 2013 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012, 2014 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -209,6 +209,16 @@ function oikp_load_plugin( $slug ) {
 
 }
 
+/**
+ * Load the latest plugin version
+ *
+ * Retrieve the latest plugin version for the given plugin.
+ * Note: We needed to add exclude=-1 to the call to get posts 
+ * to cater for when the latest plugin version happens to be the first "post" displayed on the home page.
+ * 
+ * @param object $post - the selected oik_plugin post
+ * @return object - the pluginversion post
+ */
 function oikp_load_pluginversion( $post ) {
   oik_require( "includes/bw_posts.inc" );
   //$post_types = array( 2 => "oik_pluginversion"
@@ -227,6 +237,7 @@ function oikp_load_pluginversion( $post ) {
     $atts['numberposts'] = 1;
     $atts['orderby'] = "post_date";
     $atts['order'] = "desc";
+    $atts['exclude'] = -1;
     $posts = bw_get_posts( $atts );
     $version = bw_array_get( $posts, 0, null );
   } else {
@@ -235,7 +246,6 @@ function oikp_load_pluginversion( $post ) {
     $version = null;
   }  
   return( $version );
-
 }
 
 /**
