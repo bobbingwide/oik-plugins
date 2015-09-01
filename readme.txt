@@ -2,14 +2,18 @@
 Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
-Requires at least: 3.9                               
-Tested up to: 4.3-beta3
-Stable tag: 1.15.1
+Requires at least: 4.2                               
+Tested up to: 4.3
+Stable tag: 1.15.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 oik-plugins server for FREE and Premium oik-plugins
+
+Changes in v1.15.2
+
+* Checks for potential validity of the Documentation home page field ( _oik_doc_home )
 
 Changes in v1.15.1
 
@@ -53,6 +57,9 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.15.2 =
+Update for better Documentation links.
+
 = 1.15.1 = 
 Implements changes to enable transition to the genesis-oik theme on oik-plugins.com
 
@@ -131,6 +138,10 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 
 == Changelog ==
+= 1.15.2 =
+* Fixed: Solution for https://github.com/bobbingwide/oik-plugins/issues
+* Tested: With WordPress 4.3 
+
 = 1.15.1 =
 * Changed: [oikp_download] shortcode now allows download of a previous plugin version
 * Changed: [oikp_download] shortcode will not display "Unknown plugin" if plugin='.'
@@ -139,7 +150,7 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 * Changed: oikp_display_screenshots() add [nivo] shortcode parameters: caption=n link=n 
 * Changed: oikp_display_documentation() tests for '_oik_doc_home' post meta data
 * Changed: Uses oik_require_lib( "bobbfunc" ) for deferred text translations - bw_dtt()
-* Depends: on oik v2.6-beta.0722 or higher
+* Depends: on oik v2.6-alpha.0722 or higher
 
 = 1.15 = 
 * Changed: Processing of "the_content" for oik-plugins is now implemented in includes/oik-plugins-content.php

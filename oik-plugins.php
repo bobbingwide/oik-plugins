@@ -4,10 +4,13 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.15.1
+Version: 1.15.2
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
-License: GPL2
+Text Domain: oik-plugins
+Domain Path: /languages/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
     Copyright 2012-2015 Bobbing Wide (email : herb@bobbingwide.com )
 
@@ -801,6 +804,7 @@ add_filter( "oik_validate_apikey", "oikp_oik_validate_apikey", 10, 2 );
  * oik-plugins is now dependent upon oik v2.2 and oik-fields v1.36
  * oik-plugins is now dependent upon oik v2.3 and oik-fields v1.39
  * oik-plugins v1.15.1 is now dependent upon v2.6 and oik-fields v1.40
+ * oik-plugins v1.15.2 is now dependent upon oik v3.0.0-alpha.0820 and oik-fields v1.40
  */ 
 function oikp_activation() {
   static $plugin_basename = null;
@@ -811,6 +815,6 @@ function oikp_activation() {
       require_once( "admin/oik-activation.php" );
     }  
   }  
-  $depends = "oik-fields:1.40,oik:v2.6-beta.0722";
+  $depends = "oik-fields:1.40,oik:3.0.0-alpha.0820";
   oik_plugin_lazy_activation( __FILE__, $depends, "oik_plugin_plugin_inactive" );
 }
