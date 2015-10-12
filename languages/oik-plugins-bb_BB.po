@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the oik plugins server package.
 msgid ""
 msgstr ""
-"Project-Id-Version: oik plugins server 1.15.1\n"
+"Project-Id-Version: oik plugins server 1.15.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/oik-plugins\n"
-"POT-Creation-Date: 2015-07-22 14:58:44+00:00\n"
+"POT-Creation-Date: 2015-10-12 17:23:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "Language: bb_BB\n"
@@ -15,107 +15,107 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 #: admin/oik-plugins.php:42
 msgid "plugins server settings"
-msgstr "plniugs seevrr sgntties"
+msgstr "pgulins severr sttigens"
 
 #: admin/oik-plugins.php:43
 msgid "Defaults"
-msgstr "Dtfueals"
+msgstr "Delaftus"
 
 #: admin/oik-plugins.php:44
 msgid "Status"
-msgstr "Sttuas"
+msgstr "Sattus"
 
 #: admin/oik-plugins.php:57
 msgid "Folder for premium plugins"
-msgstr "Feodlr fOr pumriem pinlgus"
+msgstr "Fdoelr fOr pmueirm pignlus"
 
 #: admin/oik-plugins.php:58
 msgid "API key"
 msgstr "API kEy"
 
-#: admin/oik-plugins.php:162 oik-plugins.php:369 oik-plugins.php:393
+#: admin/oik-plugins.php:162 oik-plugins.php:372 oik-plugins.php:396
 msgid "Plugin"
-msgstr "Pgliun"
+msgstr "Pguiln"
 
-#: admin/oik-plugins.php:164 oik-plugins.php:394
+#: admin/oik-plugins.php:164 oik-plugins.php:397
 msgid "Downloads"
-msgstr "Daowondls"
+msgstr "Donoawlds"
 
-#: admin/oik-plugins.php:165 oik-plugins.php:395
+#: admin/oik-plugins.php:165 oik-plugins.php:398
 msgid "Updates"
-msgstr "Utadeps"
+msgstr "Upteads"
 
 #: admin/oik-plugins.php:166
 msgid "Totals"
 msgstr "Ttaols"
 
-#: oik-plugins.php:211
-msgid "Plugin type"
-msgstr "Puilgn tpye"
-
-#: oik-plugins.php:212
-msgid "Plugin slug"
-msgstr "Puilgn sulg"
-
-#: oik-plugins.php:213
-msgid "Plugin name"
-msgstr "Pulgin nmae"
-
 #: oik-plugins.php:214
-msgid "Description"
-msgstr "Dretpioscin"
+msgid "Plugin type"
+msgstr "Piulgn tpye"
 
 #: oik-plugins.php:215
+msgid "Plugin slug"
+msgstr "Puilgn slug"
+
+#: oik-plugins.php:216
+msgid "Plugin name"
+msgstr "Pugiln nmae"
+
+#: oik-plugins.php:217
+msgid "Description"
+msgstr "Doiietrscpn"
+
+#: oik-plugins.php:218
 msgid "GitHub repository"
-msgstr "GtiuHb rotpesoriy"
+msgstr "GtuHib rpoortisey"
 
-#: oik-plugins.php:224
+#: oik-plugins.php:227
 msgid "Purchasable product"
-msgstr "Pushbaacrle pudcrot"
+msgstr "Psacbuhrale pourcdt"
 
-#: oik-plugins.php:271
+#: oik-plugins.php:274
 msgid "Type"
 msgstr "Tpye"
 
-#: oik-plugins.php:272
+#: oik-plugins.php:275
 msgid "Slug"
 msgstr "Sulg"
 
-#: oik-plugins.php:273
+#: oik-plugins.php:276
 msgid "Name"
 msgstr "Nmae"
 
-#: oik-plugins.php:274
+#: oik-plugins.php:277
 msgid "Product"
-msgstr "Pdruoct"
+msgstr "Prudcot"
 
-#: oik-plugins.php:370 oik-plugins.php:392 oik-plugins.php:414
+#: oik-plugins.php:373 oik-plugins.php:395 oik-plugins.php:417
 msgid "Version"
-msgstr "Vrosien"
+msgstr "Verison"
 
-#: oik-plugins.php:377
+#: oik-plugins.php:380
 msgid "Download count"
-msgstr "Dowaonld cnout"
+msgstr "Dawlonod cnout"
 
-#: oik-plugins.php:378
+#: oik-plugins.php:381
 msgid "Update count"
-msgstr "Utapde count"
+msgstr "Udtpae conut"
 
-#: oik-plugins.php:603 shortcodes/oik-plugins.php:45
+#: oik-plugins.php:606 shortcodes/oik-plugins.php:45
 msgid "Download"
-msgstr "Dalwnood"
+msgstr "Doolwand"
 
 #: shortcodes/oik-plugins.php:50
 msgid "version"
-msgstr "vriseon"
+msgstr "vseoirn"
 
 #: shortcodes/oik-plugins.php:73
 msgid "Download %1$s from wordpress.org"
-msgstr "Daowlond %1$s form wpdoserrs.Org"
+msgstr "Dnolwoad %1$s form woepdsrrs.Org"
 
 #: shortcodes/oik-plugins.php:205
 msgid "plugin"
-msgstr "puigln"
+msgstr "pilgun"
 
 #: shortcodes/oik-plugins.php:205
 msgid "name of the plugin"
@@ -123,7 +123,7 @@ msgstr "nmae Of thE pugiln"
 
 #. Plugin Name of the plugin/theme
 msgid "oik plugins server"
-msgstr "OIk pulgnis srever"
+msgstr "OIk pnugils srveer"
 
 #. Plugin URI of the plugin/theme
 msgid "http://www.oik-plugins.com/oik-plugins/oik-plugins"
@@ -131,11 +131,11 @@ msgstr "http://www.oik-plugins.com/oik-plugins/oik-plugins"
 
 #. Description of the plugin/theme
 msgid "oik plugins server for premium and free(mium) oik plugins"
-msgstr "OIk plunigs sevrer fOr puremim And free(muim) OIk puiglns"
+msgstr "OIk pnuglis seevrr fOr pueirmm And fere(mium) OIk punligs"
 
 #. Author of the plugin/theme
 msgid "bobbingwide"
-msgstr "bgionbidbwe"
+msgstr "bngibowbide"
 
 #. Author URI of the plugin/theme
 msgid "http://www.oik-plugins.com/author/bobbingwide"

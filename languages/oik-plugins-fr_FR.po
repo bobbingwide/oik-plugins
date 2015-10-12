@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the oik plugins server package.
 msgid ""
 msgstr ""
-"Project-Id-Version: oik plugins server 1.15.1\n"
+"Project-Id-Version: oik plugins server 1.15.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/oik-plugins\n"
-"POT-Creation-Date: 2015-07-22 14:58:44+00:00\n"
+"POT-Creation-Date: 2015-10-12 17:23:05+00:00\n"
 "MIME-Version: 1.0\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "Language: fr_FR\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 #: admin/oik-plugins.php:42
 msgid "plugins server settings"
-msgstr ""
+msgstr "les paramètres du serveur plugins"
 
 #: admin/oik-plugins.php:43
 msgid "Defaults"
@@ -27,21 +27,21 @@ msgstr "État"
 
 #: admin/oik-plugins.php:57
 msgid "Folder for premium plugins"
-msgstr ""
+msgstr "dossier pour les plugins de prime"
 
 #: admin/oik-plugins.php:58
 msgid "API key"
-msgstr ""
+msgstr "Clé API"
 
-#: admin/oik-plugins.php:162 oik-plugins.php:369 oik-plugins.php:393
+#: admin/oik-plugins.php:162 oik-plugins.php:372 oik-plugins.php:396
 msgid "Plugin"
 msgstr "Extension"
 
-#: admin/oik-plugins.php:164 oik-plugins.php:394
+#: admin/oik-plugins.php:164 oik-plugins.php:397
 msgid "Downloads"
-msgstr ""
+msgstr "Téléchargements"
 
-#: admin/oik-plugins.php:165 oik-plugins.php:395
+#: admin/oik-plugins.php:165 oik-plugins.php:398
 msgid "Updates"
 msgstr "Mises à jour"
 
@@ -49,59 +49,59 @@ msgstr "Mises à jour"
 msgid "Totals"
 msgstr "Totaux"
 
-#: oik-plugins.php:211
-msgid "Plugin type"
-msgstr ""
-
-#: oik-plugins.php:212
-msgid "Plugin slug"
-msgstr ""
-
-#: oik-plugins.php:213
-msgid "Plugin name"
-msgstr ""
-
 #: oik-plugins.php:214
+msgid "Plugin type"
+msgstr "Type Plugin"
+
+#: oik-plugins.php:215
+msgid "Plugin slug"
+msgstr "slug Plugin"
+
+#: oik-plugins.php:216
+msgid "Plugin name"
+msgstr "nom du plugin"
+
+#: oik-plugins.php:217
 msgid "Description"
 msgstr ""
 
-#: oik-plugins.php:215
+#: oik-plugins.php:218
 msgid "GitHub repository"
-msgstr ""
+msgstr "GitHub référentiel"
 
-#: oik-plugins.php:224
+#: oik-plugins.php:227
 msgid "Purchasable product"
-msgstr ""
+msgstr "produits achetables"
 
-#: oik-plugins.php:271
+#: oik-plugins.php:274
 msgid "Type"
 msgstr ""
 
-#: oik-plugins.php:272
+#: oik-plugins.php:275
 msgid "Slug"
 msgstr "Identifiant"
 
-#: oik-plugins.php:273
+#: oik-plugins.php:276
 msgid "Name"
 msgstr "Nom"
 
-#: oik-plugins.php:274
+#: oik-plugins.php:277
 msgid "Product"
 msgstr "Produit"
 
-#: oik-plugins.php:370 oik-plugins.php:392 oik-plugins.php:414
+#: oik-plugins.php:373 oik-plugins.php:395 oik-plugins.php:417
 msgid "Version"
 msgstr ""
 
-#: oik-plugins.php:377
+#: oik-plugins.php:380
 msgid "Download count"
-msgstr ""
+msgstr "compte des téléchargements"
 
-#: oik-plugins.php:378
+#: oik-plugins.php:381
 msgid "Update count"
-msgstr ""
+msgstr "Ajouter comptage"
 
-#: oik-plugins.php:603 shortcodes/oik-plugins.php:45
+#: oik-plugins.php:606 shortcodes/oik-plugins.php:45
 msgid "Download"
 msgstr "Téléchargement"
 
@@ -111,19 +111,19 @@ msgstr ""
 
 #: shortcodes/oik-plugins.php:73
 msgid "Download %1$s from wordpress.org"
-msgstr ""
+msgstr "Télécharger $1$s de wordpress.org"
 
 #: shortcodes/oik-plugins.php:205
 msgid "plugin"
-msgstr ""
+msgstr "extension"
 
 #: shortcodes/oik-plugins.php:205
 msgid "name of the plugin"
-msgstr ""
+msgstr "nom de l'extension"
 
 #. Plugin Name of the plugin/theme
 msgid "oik plugins server"
-msgstr ""
+msgstr "extension serveur"
 
 #. Plugin URI of the plugin/theme
 msgid "http://www.oik-plugins.com/oik-plugins/oik-plugins"

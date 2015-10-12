@@ -99,7 +99,7 @@ function oikp_tabulate_pluginversion( $post ) {
     $additional_content = "[bw_table";
     $additional_content .= kv( "post_type", $post_type );
     
-    $additional_content .= kv( "fields", "title,excerpt,_oikpv_version" );
+    $additional_content .= kv( "fields", "title,excerpt,date,required_version,compatible_up_to" );
     $additional_content .= kv( "meta_key", "_oikpv_plugin" );
     $additional_content .= kv( "meta_value", $post->ID );
     $additional_content .= kv( "orderby", "date" );
