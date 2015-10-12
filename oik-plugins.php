@@ -818,3 +818,18 @@ function oikp_activation() {
   $depends = "oik-fields:1.40,oik:3.0.0-alpha.0820";
   oik_plugin_lazy_activation( __FILE__, $depends, "oik_plugin_plugin_inactive" );
 }
+
+add_filter( "oik_clone_filter_all_post_meta", "oikp_oik_clone_filter_all_post_meta" );
+
+/**
+ * Implement "oik_clone_filter_all_post_meta"
+ *
+ * We don't want the following fields to be updated during cloning
+ * - _oikpv_download_count
+ * - _oikpv_update_count
+ */
+function oikp_oik_clone_filter_all_post_meta( $post_meta ) {
+	unset( $post_meta['_oikpv_download_count'] );
+	unset( $post_meta['_oikpv_update_count'] );
+	return( $post_meta );
+}
