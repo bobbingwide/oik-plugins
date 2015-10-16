@@ -1,4 +1,46 @@
 <?php // (C) Copyright Bobbing Wide 2015
+	 
+/**
+ * Determine the tabs to display
+ *
+ * The tabs depend on the plugin type, which is currently a simple field
+ * 
+ * Type | Means                           | Tabs to display
+ * ---- | -----                           | -----------------------------
+ * 0    | "None"													| ? Reserved for WordPress core
+ * 1    | "WordPress plugin"							| Omit: FAQ, Changelog, Screenshots, Documentation
+ * 2    | "FREE oik plugin"							  |	All
+ * 3    | "Premium oik plugin"						| All
+ * 4    | "Other premium plugin"					| Omit: FAQ, Changelog, Screenshots, Documentation
+ * 5    | "Bespoke plugin"								| All
+ * 6    | "WordPress and FREE plugin"		  | All
+ *
+ * @param object $post the post object
+ * @return array keyed by tab of valid tabs for this plugin type
+ *
+ */	 
+function oikp_additional_content_tabs( $post ) {
+  $tabs = array( "description" => "Description"
+               , "faq" => "FAQ"
+               , "screenshots" => "Screenshots"
+               , "changelog" => "Changelog"
+               , "shortcodes" => "Shortcodes"
+               , "apiref" => "API Ref"
+               , "documentation" => "Documentation"
+               );
+	$plugin_type = get_post_meta( $post->ID,  "_oikp_type", true );
+	switch ( $plugin_type ) {
+		case 0:
+		case 1:
+		case 4:
+      unset( $tabs['documentation'] );
+			unset( $tabs['faq'] );
+			unset( $tabs['screenshots'] );	
+			unset( $tabs['changelog'] );
+			break;
+	}						 
+	return( $tabs );
+}							
 
 
 /**
@@ -16,14 +58,7 @@
                //, "Developers" => "Developers"
  */
 function oikp_additional_content_links( $post, $current_tab ) {
-  $tabs = array( "description" => "Description"
-               , "faq" => "FAQ"
-               , "screenshots" => "Screenshots"
-               , "changelog" => "Changelog"
-               , "shortcodes" => "Shortcodes"
-               , "apiref" => "API Ref"
-               , "documentation" => "Documentation"
-               );
+	$tabs = oikp_additional_content_tabs( $post );							 
   $url = get_permalink( $post->ID );
   wp_enqueue_style( "oik-pluginsCSS", oik_url( "css/oik-plugins.css", "oik-plugins" ) );
   bw_push();
@@ -163,8 +198,6 @@ function oikp_display_shortcodes( $post, $slug ) {
   $additional_content = "[codes posts_per_page=.]";
   return( $additional_content ); 
 }
-
-
 
 /**
  * Display the API reference for the plugin
