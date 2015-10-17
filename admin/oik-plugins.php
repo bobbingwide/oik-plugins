@@ -61,6 +61,7 @@ function oik_plugins_server_options() {
   //bw_select_arr( $option, "Author name", $options, "display_name", array( "#options" =>  bw_user_list() ));
   // bw_form_field_noderef( "bw_plugins_server[author_id], "", "Author", $options['author_id'], array( "#type" => "user" ));
   bw_form_field_noderef( "bw_plugins_server[faq]", "", "FAQ page", $options['faq'], array( "#type" => "page", "#optional" => true ));
+	bw_checkbox_arr( $option, "Use [apiref] shortcode", $options, 'apiref' );
   etag( "table" );   
   p( isubmit( "ok", "Update", null, "button-primary" ) );
   etag( "form" );

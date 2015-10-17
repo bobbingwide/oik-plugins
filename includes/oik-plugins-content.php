@@ -28,6 +28,9 @@ function oikp_additional_content_tabs( $post ) {
                , "apiref" => "API Ref"
                , "documentation" => "Documentation"
                );
+	// "apiref" or what?
+								 
+							 
 	$plugin_type = get_post_meta( $post->ID,  "_oikp_type", true );
 	switch ( $plugin_type ) {
 		case 0:
@@ -38,10 +41,33 @@ function oikp_additional_content_tabs( $post ) {
 			unset( $tabs['screenshots'] );	
 			unset( $tabs['changelog'] );
 			break;
-	}						 
+	}	
+	$tabs = oikp_oikp_additional_content_tabs( $tabs, $post );					 
 	return( $tabs );
-}							
+}
 
+/**
+ * Decide which tabs to display based on website information
+ * A2Z - displays APIs Classes Files Hooks
+ * oik-plugins - displays apiref
+ *
+ * We should use an option field 
+ *  
+ */ 
+function oikp_oikp_additional_content_tabs( $tabs, $post ) {
+	$use_apiref_shortcode = bw_get_option( "apiref", "bw_plugins_server" );
+	if ( $use_apiref_shortcode ) {
+
+	} else {
+		unset( $tabs['apiref'] );
+		$tabs['apis'] = "APIs";
+		$tabs['classes'] = "Classes";
+		$tabs['files'] = "Files";
+		$tabs['hooks'] = "Hooks";
+	}
+	return( $tabs );
+	
+}
 
 /**
  * Add the sections links for the plugin
@@ -56,11 +82,20 @@ function oikp_additional_content_tabs( $post ) {
                //, "Support" => "Support"
                //, "Reviews" => "Reviews"
                //, "Developers" => "Developers"
+ *
+ * We may display these for WP-a2z
+ * 
+ * [apiref] DIY shortcode breaks down into
+ * <h3>APIs</h3> [apis] <h3>Classes</h3> [classes] <h3>Files</h3> [files] <h3>Hooks</h3> [hooks]
  */
 function oikp_additional_content_links( $post, $current_tab ) {
-	$tabs = oikp_additional_content_tabs( $post );							 
-  $url = get_permalink( $post->ID );
-  wp_enqueue_style( "oik-pluginsCSS", oik_url( "css/oik-plugins.css", "oik-plugins" ) );
+	$tabs = oikp_additional_content_tabs( $post ); 
+	$valid = bw_array_get( $tabs, $current_tab, false );
+	if ( !$valid ) { 
+		return( $valid );
+	}						 
+	$url = get_permalink( $post->ID );
+	wp_enqueue_style( "oik-pluginsCSS", oik_url( "css/oik-plugins.css", "oik-plugins" ) );
   bw_push();
   sdiv( "plugin-info" );
   sul( null, "sections" );
@@ -148,12 +183,20 @@ function oikp_tabulate_pluginversion( $post ) {
 }
 
 /**
+ * Display output for a potentially unknown tab
+ *
+ * If there's a shortcode for it then we'll use that
  */
 function oikp_display_unknown( $post, $slug ) {
-  
-  $oik_tab = bw_array_get( $_REQUEST, "oik-tab", "description" ); 
-  $oik_tab = esc_html( $oik_tab );
-  return( "No logic for displaying: $oik_tab ");
+	$oik_tab = bw_array_get( $_REQUEST, "oik-tab", "description" ); 
+	if ( shortcode_exists( $oik_tab ) ) {
+		$ret = "[$oik_tab]" ;
+  } else {
+		$oik_tab = esc_html( $oik_tab );
+		$ret = "Invalid request: $oik_tab ";
+	}
+	return( $ret );
+	
 
 }
 
