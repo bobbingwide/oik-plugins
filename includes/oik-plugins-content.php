@@ -193,7 +193,8 @@ function oikp_display_unknown( $post, $slug ) {
 		$ret = "[$oik_tab]" ;
   } else {
 		$oik_tab = esc_html( $oik_tab );
-		$ret = "Invalid request: $oik_tab ";
+		$ret = "Invalid request: $oik_tab. Shortcode is not registered";
+		bw_trace2( $ret, "ret", true, BW_TRACE_ERROR );
 	}
 	return( $ret );
 	

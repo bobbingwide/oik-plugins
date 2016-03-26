@@ -4,7 +4,7 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.15.4
+Version: 1.15.5
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-plugins
@@ -12,7 +12,7 @@ Domain Path: /languages/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-    Copyright 2012-2015 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012-2016 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -599,6 +599,7 @@ function oikp_handle_upload( $file, $action ) {
  * @return string additional content
  */
 function oikp_the_post_oik_plugins( $post, $content ) {
+  do_action( "oik_add_shortcodes" );
   $additional_content = null;
   $slug = get_post_meta( $post->ID, "_oikp_slug", true );
   if ( !is_single() && false === strpos( $post->post_content, "[oikp_download" ) ) {
@@ -618,7 +619,6 @@ function oikp_the_post_oik_plugins( $post, $content ) {
     $content .= $additional_content;
   }  
   //bw_trace2( $additional_content, "additional content" );
-  do_action( "oik_add_shortcodes" );
   return( $content );
 }
 
