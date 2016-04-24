@@ -281,7 +281,6 @@ function oikp_lazy_redirect( $oik_plugin_action ) {
  * 
  * @param string $slug - the plugin slug = folder
  * @return post|null
- * 
  */
 function oikp_load_plugin( $slug ) {
   oik_require( "includes/bw_posts.inc" );
@@ -294,9 +293,8 @@ function oikp_load_plugin( $slug ) {
   $atts['exclude'] = -1;
   $posts = bw_get_posts( $atts );
   $post = bw_array_get( $posts, 0, null );
-  bw_trace2( $post );
+  bw_trace2( $post, "post", true, BW_TRACE_VERBOSE );
   return( $post );
-
 }
 
 /**
