@@ -196,7 +196,7 @@ function bw_plugin_post_types() {
 function oik_register_oik_plugin() {
   $post_type = 'oik-plugins';
   $post_type_args = array();
-  $post_type_args['label'] = 'oik plugins';
+  $post_type_args['label'] = 'Plugins';
   $post_type_args['description'] = 'oik plugin';
   $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
   $post_type_args['taxonomies'] = array( "oik_tags" );
