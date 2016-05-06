@@ -820,6 +820,7 @@ function oikp_activation() {
 }
 
 add_filter( "oik_clone_filter_all_post_meta", "oikp_oik_clone_filter_all_post_meta" );
+add_filter( "oik_clone_filter_media_file", "oikp_oik_clone_filter_media_file", 10, 2 );
 
 /**
  * Implement "oik_clone_filter_all_post_meta"
@@ -832,4 +833,24 @@ function oikp_oik_clone_filter_all_post_meta( $post_meta ) {
 	unset( $post_meta['_oikpv_download_count'] );
 	unset( $post_meta['_oikpv_update_count'] );
 	return( $post_meta );
+}
+
+/**
+ * Implement "oik_clone_filter_media_file" for oik-plugins
+ *
+ * @param array $media_file
+ * @param object $attachment
+ * @return array $media_file
+ */
+function oikp_oik_clone_filter_media_file( $media_file, $attachment ) {
+	if ( $media_file['type'] == "application/zip" ) {
+		$attachment_post_type = get_post_type( $attachment->post_parent );
+		if ( $attachment_post_type == "oik_premiumversion" ) {
+			$new_file = oikp_create_new_file_name( $media_file[ 'file'] );
+			$media_file['file'] = $new_file;
+		}
+		bw_trace2();
+		//gob();
+	}
+	return( $media_file );
 }
