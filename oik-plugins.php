@@ -29,7 +29,20 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
     http://www.gnu.org/licenses/gpl-2.0.html
 
 */
-add_action( "init", "oikp_plugin_rewrite" );
+
+oik_plugins_loaded();
+
+/**
+ * Function to invoke when oik-plugins is loaded
+ */
+function oik_plugins_loaded() {
+	add_action( "init", "oikp_plugin_rewrite" );
+	add_action( 'oik_fields_loaded', 'oikp_init' );
+	add_action( "admin_notices", "oikp_activation" );
+	add_filter( "oik_validate_apikey", "oikp_oik_validate_apikey", 10, 2 );
+	add_filter( "oik_clone_filter_all_post_meta", "oikp_oik_clone_filter_all_post_meta" );
+	add_filter( "oik_clone_filter_media_file", "oikp_oik_clone_filter_media_file", 10, 2 );
+}
 
 /** 
  * Implement "init" action for oik plugins server
@@ -79,7 +92,6 @@ function oikp_template_redirect() {
       oikp_lazy_redirect_banner( $oik_banner );
     }
   }  
-   
 }
 
 /** 
@@ -115,8 +127,6 @@ function oikp_posts_request( $request, $query ) {
   }  
   return( $request );
 }
-
-add_action( 'oik_fields_loaded', 'oikp_init' );
 
 /**
  * Implement the "oik_fields_loaded" action for oik plugins server
@@ -792,10 +802,6 @@ function oikp_oik_validate_apikey( $return_value, $apikey ) {
   // bw_trace2();   
   return( $return_value );
 }
-
-add_action( "admin_notices", "oikp_activation" );
-
-add_filter( "oik_validate_apikey", "oikp_oik_validate_apikey", 10, 2 );
  
 /**
  * Implement "admin_notices" for oik-plugins 
@@ -818,9 +824,6 @@ function oikp_activation() {
   $depends = "oik-fields:1.40,oik:3.0.0-alpha.0820";
   oik_plugin_lazy_activation( __FILE__, $depends, "oik_plugin_plugin_inactive" );
 }
-
-add_filter( "oik_clone_filter_all_post_meta", "oikp_oik_clone_filter_all_post_meta" );
-add_filter( "oik_clone_filter_media_file", "oikp_oik_clone_filter_media_file", 10, 2 );
 
 /**
  * Implement "oik_clone_filter_all_post_meta"
@@ -850,7 +853,6 @@ function oikp_oik_clone_filter_media_file( $media_file, $attachment ) {
 			$media_file['file'] = $new_file;
 		}
 		bw_trace2();
-		//gob();
 	}
 	return( $media_file );
 }

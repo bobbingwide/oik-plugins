@@ -3,13 +3,16 @@ Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
 Requires at least: 4.2                               
-Tested up to: 4.3.1
-Stable tag: 1.15.4
+Tested up to: 4.5.1
+Stable tag: 1.15.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 oik-plugins server for FREE and Premium oik-plugins
+
+Changes in v1.15.5
+* Supports cloning of premium plugin version attached zip files
 
 Changes in v1.15.4
 
@@ -66,6 +69,9 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.15.5 =
+Required for oik-clone updates. Tested with WordPress 4.5.1 and WordPress MultiSite.
+
 = 1.15.4 = 
 Upgrade for improved display of sections based on plugin type and shortcode options.
 
@@ -153,6 +159,13 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 
 == Changelog ==
+= 1.15.5 = 
+* Added: Implement 'oik_clone_filter_media_file' filter [github bobbingwide oik-plugins issues 5]
+* Changed: Trace levels
+* Changed: Label to 'Plugins' for WP-a2z
+* Fixed: Run do_action( 'oik_add_shortcodes' ) earlier [github bobbingwide oik-plugins issues 4]
+* Tested: With WordPress 4.5.1 and WordPress MultiSite
+
 = 1.15.4 = 
 * Changed: Improved logic to determine sections to display for oik-plugins post typee
 * Changed: Added use [apiref] shortcode checkbox
