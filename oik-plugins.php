@@ -132,9 +132,8 @@ function oikp_posts_request( $request, $query ) {
  * Implement the "oik_fields_loaded" action for oik plugins server
  */
 function oikp_init( ) {
-  //bw_backtrace();
-  
-  /**
+ 
+  /*
    * We need to register the custom categories and associate them with mutiple post types
    * so we have to register these first, then associate them to the post_types when they are registered
    */
@@ -235,10 +234,12 @@ function oik_register_oik_plugin() {
   $purchasable_product_type[] = "download"; 
   $purchasable_product_type[] = "product"; 
   bw_register_field( "_oikp_prod", "noderef", "Purchasable product", array( '#type' => $purchasable_product_type, '#optional' => true ) );   
+	bw_register_field_for_object_type( "_component_version", $post_type );
   bw_register_field_for_object_type( "_oikp_type", $post_type );
   bw_register_field_for_object_type( "_oikp_slug", $post_type );
   bw_register_field_for_object_type( "_oikp_name", $post_type );
   bw_register_field_for_object_type( "_oikp_desc", $post_type );
+	
   bw_register_field_for_object_type( "_oikp_git", $post_type );
   bw_register_field_for_object_type( "_oikp_prod", $post_type );
   // bw_register_field_for_object_type( "_oikp_banner", $post_type );
@@ -374,30 +375,22 @@ function oik_register_oik_pluginversion() {
 /**
  * Register the fields for oik_pluginversion
  *  
- * The description is the content field.
- * The title should contain the plugin name and version
+ * - The title should contain the plugin name and version.
+ * - The description is the content field.
+ * - The upgrade notice is part of the description. 
+ * - We don't display the _component_version virtual field since this might confuse the user seeing two versions.
+ * - Requires and tested are custom taxonomies.
+ * - Download count and Update count are not displayed on the front end.
  */ 
 function oik_register_oik_pluginversion_fields( $post_type ) { 
-  
   bw_register_field( "_oikpv_plugin", "noderef", "Plugin", array( '#type' => 'oik-plugins') );   
   bw_register_field( "_oikpv_version", "text", "Version", array( '#hint' => " (omit the v)" ) ); 
-  
-  // $wp_versions = oik_map_WP_versions();
-
-  // bw_register_field( "_oikpv_requires", "select", "Requires", array( '#options' => $wp_versions, '#theme' => false ) ); 
-  // bw_register_field( "_oikpv_tested", "select", "Tested", array( '#options' => $wp_versions, '#theme' => false ) ); 
-  // bw_register_field( "_oikpv_upgrade", "textarea", "Upgrade notice" ); 
   bw_register_field( "_oikpv_download_count", "numeric", "Download count", array( '#theme' => false ) );
   bw_register_field( "_oikpv_update_count", "numeric", "Update count", array( '#theme' => false ) );
-  
   bw_register_field_for_object_type( "_oikpv_version", $post_type );
   bw_register_field_for_object_type( "_oikpv_plugin", $post_type );
-  // bw_register_field_for_object_type( "_oikpv_requires", $post_type );
-  // bw_register_field_for_object_type( "_oikpv_tested", $post_type );
-  // bw_register_field_for_object_type( "_oikpv_upgrade", $post_type );
   bw_register_field_for_object_type( "_oikpv_download_count", $post_type );
   bw_register_field_for_object_type( "_oikpv_update_count", $post_type );
-  
   oikp_columns_and_titles( $post_type );
 }
 
