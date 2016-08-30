@@ -216,7 +216,7 @@ function oikp_display_description( $post ) {
  */
 function oikp_display_faq( $post ) {
   $id = $post->ID;
-  return( "[bw_accordion post_type=oik-faq meta_key=_plugin_ref meta_value=$id format=TEM]" );
+  return( "[bw_accordion post_type=oik-faq meta_key=_plugin_ref meta_value=$id format=TEM numberposts=-1]" );
 } 
  
 /**
