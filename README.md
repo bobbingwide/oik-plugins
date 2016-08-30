@@ -1,10 +1,11 @@
 # oik plugins server 
+![banner](https://raw.githubusercontent.com/bobbingwide/oik-plugins/master/assets/oik-plugins-banner-772x250.jpg)
 * Contributors: bobbingwide
 * Donate link: http://www.oik-plugins.com/oik/oik-donate/
 * Tags: plugins, server, FREE, premium, shortcodes
 * Requires at least: 4.2
-* Tested up to: 4.5.1
-* Stable tag: 1.15.5
+* Tested up to: 4.6
+* Stable tag: 1.15.6
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +70,9 @@ Yes - see above
 
 
 ## Upgrade Notice 
+# 1.15.6 
+Required where there are more than 10 FAQs for a plugin. Tested with WordPress 4.6 and WordPress Multisite.
+
 # 1.15.5 
 Required for oik-clone updates. Tested with WordPress 4.5.1 and WordPress MultiSite.
 
@@ -157,8 +161,12 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 # 1.0.0927.2012 
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
-
 ## Changelog 
+# 1.15.6 
+* Changed: Allow for unlimited FAQs in the bw_accordion shortcode [github bobbingwide oik-plugins issue 7]
+* Changed: Associate the _component_version virtual field to oik-plugins [github bobbingwide oik-plugins issue 6]
+* Tested: With WordPress 4.6 and WordPress Multisite
+
 # 1.15.5 
 * Added: Implement 'oik_clone_filter_media_file' filter [github bobbingwide oik-plugins issues 5]
 * Changed: Trace levels
