@@ -45,21 +45,24 @@ function additional_content_tabs( $post ) {
 		case 0:
 		case 1:
 		case 4:
-		case 5:
+		//case 5:
       unset( $tabs['documentation'] );
 			unset( $tabs['faq'] );
 			unset( $tabs['screenshots'] );	
 			unset( $tabs['changelog'] );
 			break;
 	}	
-	$tabs = $this->oikp_additional_content_tabs( $tabs, $post );					 
+	$tabs = $this->oikp_additional_content_tabs( $tabs, $post ); 
+	$tabs = $this->check_content_for_tabs( $tabs ); 				 
 	return( $tabs );
 }
 
 /**
  * Decide which tabs to display based on website information
+ * 
  * A2Z - displays APIs Classes Files Hooks
  * oik-plugins - displays apiref
+ * bobbing wide - displays apiref
  *
  * We should use an option field 
  *  
@@ -78,6 +81,102 @@ function oikp_additional_content_tabs( $tabs, $post ) {
 	return( $tabs );
 	
 }
+
+/**
+ * Checks content for each tab.
+ *
+ * @param array $tabs
+ * @return array possibly updated to reflect how much content there is.
+ */
+function check_content_for_tabs( $tabs ) {
+	foreach ( $tabs as $tab => $label ) {	
+		$tab_has_content = $this->check_content_for_tab( $tab );
+		if ( null === $tab_has_content ) {
+			unset( $tabs[ $tab ] );
+		}
+	}
+	return( $tabs );
+}
+
+/**
+ * Count the content to be displayed in the tab
+ * 
+ * @param string $tab - the tab name
+ * @return integer|null - the number of items to be displayed. 0 is acceptable for some tabs.
+ */
+function check_content_for_tab( $tab ) {
+	$count = 0;
+	$method = "count_$tab";
+	if ( is_callable( array( $this, $method  ) ) ) {
+		$count = $this->$method();
+	}
+	return( $count );
+}
+
+/**
+ * Counts the Description.
+ */
+function count_description() {
+	return 1;
+}
+
+/**
+ * Counts the FAQs
+ * 
+ */
+function count_faq() {
+	return null ;
+}
+
+/**
+ * Counts the screenshots 
+ */
+function count_screenshots() {
+	return null;
+}
+
+/**
+ * Counts the versions
+ */
+function count_changelog() {
+	return( 0 );
+}
+
+/** 
+ * Counts the shortcodes
+ */
+function count_shortcodes() {
+	return( 0 );
+}
+
+/**
+ * 
+ */
+function count_apiref() {
+	if ( shortcode_exists( 'apiref' ) ) {
+		return( 1 );
+	}
+	return( null ); 
+}
+
+function count_documentation() {
+	return( 0 );
+}
+ /*
+	
+		
+    $tabs = array( "description" => "display_description"
+                 , "faq" => "display_faq"
+                 , "screenshots" => "display_screenshots"
+                 , "changelog" => "tabulate_pluginversion" 
+                 , "shortcodes" => "display_shortcodes" 
+                 , "apiref" => "display_apiref"
+                 , "documentation" => "display_documentation" 
+                 );
+	return( 1 );
+
+}
+*/
 
 /**
  * Add the sections links for the plugin
@@ -257,9 +356,11 @@ function display_shortcodes( $post, $slug ) {
  * Display the API reference for the plugin
  * 
  * Uses the [apiref] shortcode which determines the plugin automatically
+ * This assumes the shortcode is defined. 
  *
  */
 function display_apiref( $post, $slug ) {
+	
   $additional_content = "[apiref]";
   return( $additional_content ); 
 }
