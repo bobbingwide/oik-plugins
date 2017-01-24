@@ -615,8 +615,10 @@ function oikp_the_post_oik_plugins( $post, $content ) {
   }
 
   if ( is_single() ) {
-    oik_require( "includes/oik-plugins-content.php", "oik-plugins" );
-    $content = oikp_additional_content( $post, $slug );
+    oik_require( "includes/class-oik-plugins-content.php", "oik-plugins" );
+		$oik_plugins_content = new OIK_plugins_content();
+		$content = $oik_plugins_content->additional_content( $post, $slug );
+    //$content = oikp_additional_content( $post, $slug );
     // $content = $additional_content . $content;
   } else {
     $content .= $additional_content;

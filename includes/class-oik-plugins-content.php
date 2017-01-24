@@ -1,5 +1,14 @@
-<?php // (C) Copyright Bobbing Wide 2015
-	 
+<?php // (C) Copyright Bobbing Wide 2015-2017
+
+/**
+ * Class: OIK_plugins_content
+ *
+ */
+class OIK_plugins_content { 
+
+	function __construct() {
+	}
+ 
 /**
  * Determine the tabs to display
  *
@@ -19,7 +28,7 @@
  * @return array keyed by tab of valid tabs for this plugin type
  *
  */	 
-function oikp_additional_content_tabs( $post ) {
+function additional_content_tabs( $post ) {
   $tabs = array( "description" => "Description"
                , "faq" => "FAQ"
                , "screenshots" => "Screenshots"
@@ -36,13 +45,14 @@ function oikp_additional_content_tabs( $post ) {
 		case 0:
 		case 1:
 		case 4:
+		case 5:
       unset( $tabs['documentation'] );
 			unset( $tabs['faq'] );
 			unset( $tabs['screenshots'] );	
 			unset( $tabs['changelog'] );
 			break;
 	}	
-	$tabs = oikp_oikp_additional_content_tabs( $tabs, $post );					 
+	$tabs = $this->oikp_additional_content_tabs( $tabs, $post );					 
 	return( $tabs );
 }
 
@@ -54,7 +64,7 @@ function oikp_additional_content_tabs( $post ) {
  * We should use an option field 
  *  
  */ 
-function oikp_oikp_additional_content_tabs( $tabs, $post ) {
+function oikp_additional_content_tabs( $tabs, $post ) {
 	$use_apiref_shortcode = bw_get_option( "apiref", "bw_plugins_server" );
 	if ( $use_apiref_shortcode ) {
 
@@ -88,8 +98,8 @@ function oikp_oikp_additional_content_tabs( $tabs, $post ) {
  * [apiref] DIY shortcode breaks down into
  * <h3>APIs</h3> [apis] <h3>Classes</h3> [classes] <h3>Files</h3> [files] <h3>Hooks</h3> [hooks]
  */
-function oikp_additional_content_links( $post, $current_tab ) {
-	$tabs = oikp_additional_content_tabs( $post ); 
+function additional_content_links( $post, $current_tab ) {
+	$tabs = $this->additional_content_tabs( $post ); 
 	$valid = bw_array_get( $tabs, $current_tab, false );
 	if ( !$valid ) { 
 		return( $valid );
@@ -126,22 +136,22 @@ function oikp_additional_content_links( $post, $current_tab ) {
  *  
  *
  */
-function oikp_additional_content( $post, $slug=null ) {
+function additional_content( $post, $slug=null ) {
   $oik_tab = bw_array_get( $_REQUEST, "oik-tab", "description" ); 
-  $additional_content = oikp_additional_content_links( $post, $oik_tab );
+  $additional_content = $this->additional_content_links( $post, $oik_tab );
   if ( $oik_tab ) {
-    $tabs = array( "description" => "oikp_display_description"
-                 , "faq" => "oikp_display_faq"
-                 , "screenshots" => "oikp_display_screenshots"
-                 , "changelog" => "oikp_tabulate_pluginversion" 
-                 , "shortcodes" => "oikp_display_shortcodes" 
-                 , "apiref" => "oikp_display_apiref"
-                 , "documentation" => "oikp_display_documentation" 
+    $tabs = array( "description" => "display_description"
+                 , "faq" => "display_faq"
+                 , "screenshots" => "display_screenshots"
+                 , "changelog" => "tabulate_pluginversion" 
+                 , "shortcodes" => "display_shortcodes" 
+                 , "apiref" => "display_apiref"
+                 , "documentation" => "display_documentation" 
                  );
-    $oik_tab_function = bw_array_get( $tabs, $oik_tab, "oikp_display_unknown" );
+    $oik_tab_function = bw_array_get( $tabs, $oik_tab, "display_unknown" );
     if ( $oik_tab_function ) {
-      if ( is_callable( $oik_tab_function ) ) {
-        $additional_content .= $oik_tab_function( $post, $slug );
+      if ( is_callable( array( $this, $oik_tab_function ) ) ) {
+        $additional_content .= $this->$oik_tab_function( $post, $slug );
       } else {
         $additional_content .= "Missing: $oik_tab_function";
       }
@@ -158,7 +168,7 @@ function oikp_additional_content( $post, $slug=null ) {
  * 
  *  [bw_table post_type="oik_pluginversion" fields="title,excerpt,_oikpv_version" meta_key="_oikpv_plugin" meta_value=89 orderby=date order=DESC]
  */
-function oikp_tabulate_pluginversion( $post ) {
+function tabulate_pluginversion( $post ) {
   $version_type = get_post_meta( $post->ID, "_oikp_type", true );
   
   // $versions = array( null, null, "oik_pluginversion", "oik_premiumversion", null, null, "oik_pluginversion" );
@@ -187,7 +197,7 @@ function oikp_tabulate_pluginversion( $post ) {
  *
  * If there's a shortcode for it then we'll use that
  */
-function oikp_display_unknown( $post, $slug ) {
+function display_unknown( $post, $slug ) {
 	$oik_tab = bw_array_get( $_REQUEST, "oik-tab", "description" ); 
 	if ( shortcode_exists( $oik_tab ) ) {
 		$ret = "[$oik_tab]" ;
@@ -207,14 +217,14 @@ function oikp_display_unknown( $post, $slug ) {
  * @param object $post - the post object
  * @return string - the post content - shortcode will be expanded later
  */
-function oikp_display_description( $post ) {
+function display_description( $post ) {
   return( $post->post_content );
 }
 
 /**
  * Display the FAQ's for the plugin
  */
-function oikp_display_faq( $post ) {
+function display_faq( $post ) {
   $id = $post->ID;
   return( "[bw_accordion post_type=oik-faq meta_key=_plugin_ref meta_value=$id format=TEM numberposts=-1]" );
 } 
@@ -227,7 +237,7 @@ function oikp_display_faq( $post ) {
  * If not then we need to do what?
  * 
  */
-function oikp_display_screenshots( $post, $slug ) {
+function display_screenshots( $post, $slug ) {
   $additional_content = "[nivo post_type=screenshot:$slug caption=n link=n]";
   return( $additional_content ); 
 }
@@ -238,7 +248,7 @@ function oikp_display_screenshots( $post, $slug ) {
  * Uses the [codes] shortcode which determines the plugin automatically
  *
  */
-function oikp_display_shortcodes( $post, $slug ) {
+function display_shortcodes( $post, $slug ) {
   $additional_content = "[codes posts_per_page=.]";
   return( $additional_content ); 
 }
@@ -249,7 +259,7 @@ function oikp_display_shortcodes( $post, $slug ) {
  * Uses the [apiref] shortcode which determines the plugin automatically
  *
  */
-function oikp_display_apiref( $post, $slug ) {
+function display_apiref( $post, $slug ) {
   $additional_content = "[apiref]";
   return( $additional_content ); 
 }
@@ -275,7 +285,7 @@ function oikp_display_apiref( $post, $slug ) {
  * [bw_related post_type=post meta_key=_plugin_ref posts_per_page=5 ] - temporarily disabled 2015/03/15
  * `
  */
-function oikp_display_documentation( $post, $slug ) {
+function display_documentation( $post, $slug ) {
 	$field_names = bw_get_field_names( $post->ID );
 	//bw_trace2( $field_names, "field_names" );
 	if ( bw_array_get( bw_assoc( $field_names) , "_oik_doc_home", false ) ) {
@@ -300,4 +310,6 @@ function oikp_display_documentation( $post, $slug ) {
   }    
   return( $additional_content ); 
 }
+
+} 
   
