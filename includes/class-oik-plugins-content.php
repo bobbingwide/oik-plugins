@@ -6,13 +6,18 @@
  */
 class OIK_plugins_content { 
 
+	public $post;
+	public $post_id;
+	public $slug;
+
 	function __construct() {
 	}
  
 /**
  * Determine the tabs to display
  *
- * The tabs depend on the plugin type, which is currently a simple field
+ * The tabs depend on the plugin type, which is currently a simple field,
+ * then a whole load of other tests to see which of the tabs will have content.
  * 
  * Type | Means                           | Tabs to display
  * ---- | -----                           | -----------------------------
@@ -37,7 +42,6 @@ function additional_content_tabs( $post ) {
                , "apiref" => "API Ref"
                , "documentation" => "Documentation"
                );
-	// "apiref" or what?
 								 
 							 
 	$plugin_type = get_post_meta( $post->ID,  "_oikp_type", true );
@@ -59,18 +63,26 @@ function additional_content_tabs( $post ) {
 
 /**
  * Decide which tabs to display based on website information
- * 
- * A2Z - displays APIs Classes Files Hooks
- * oik-plugins - displays apiref
- * bobbing wide - displays apiref
  *
- * We should use an option field 
- *  
+ * "apiref" or what?
+ * 
+ * Site | Tabs?
+ * ---- | ---------------------------
+ * WP-a2z |  displays APIs Classes Files Hooks
+ * oik-plugins | displays apiref
+ * bobbing wide | displays apiref
+ * bobbing wide web design | No API stuff required
+ *
+ * @TODO Change the option field to be a comma separated list of tabs, in the order required
+ * 
+ * @param array $tabs
+ * @param object $post
+ * @return array updated tabs 
  */ 
 function oikp_additional_content_tabs( $tabs, $post ) {
 	$use_apiref_shortcode = bw_get_option( "apiref", "bw_plugins_server" );
 	if ( $use_apiref_shortcode ) {
-
+		// that's OK then... note if the shortcode is not defined we don't do this either
 	} else {
 		unset( $tabs['apiref'] );
 		$tabs['apis'] = "APIs";
@@ -79,7 +91,6 @@ function oikp_additional_content_tabs( $tabs, $post ) {
 		$tabs['hooks'] = "Hooks";
 	}
 	return( $tabs );
-	
 }
 
 /**
@@ -122,35 +133,87 @@ function count_description() {
 
 /**
  * Counts the FAQs
- * 
+ *
+ * @return integer|null count of FAQs associated to this plugin 
  */
 function count_faq() {
-	return null ;
+	$count = null;
+	if ( is_post_type_viewable( "oik-faq" ) ) {
+		oik_require( "includes/bw_posts.inc" );
+		$atts = array( "post_type" => "oik-faq"
+								 , "meta_key" => "_plugin_ref"
+								 , "meta_value" => $this->post_id
+								 );
+		$posts = bw_get_posts( $atts );
+		if ( $posts ) {
+			$count = count( $posts );
+		}
+	}
+	return $count ;
 }
 
 /**
  * Counts the screenshots 
+ *
+ * Count the screenshots associated with this plugin.
+ * Treat 0 as null. 
+ * 
+ * @return integer
  */
 function count_screenshots() {
-	return null;
+	$count = null;
+	if ( shortcode_exists( 'nivo' ) ) {
+		oik_require( "nivo.inc", "oik-nivo-slider" );
+		$atts = array( "post_type" => "screenshot:" . $this->slug );
+		$urls = bw_get_spt_screenshot( $atts );
+		$url_count = count( $urls );
+		if ( $url_count ) {
+			$count = $url_count;
+		}
+	}
+	return( $count );
 }
 
 /**
  * Counts the versions
+ *
+ * @TODO For the time being we'll always return 0 for any of our plugins since this is useful information
+ * and we'll expect there to be at least one version. 
+ *
+ * @return 0  
  */
 function count_changelog() {
-	return( 0 );
+	return 1;
 }
 
 /** 
  * Counts the shortcodes
  */
 function count_shortcodes() {
-	return( 0 );
+	$count = null;
+	if ( is_post_type_viewable( "oik_shortcodes" ) ) {
+		oik_require( "includes/bw_posts.inc" );
+		$atts = array( "post_type" => "oik_shortcodes"
+								 , "meta_key" => "_plugin_ref"
+								 , "meta_value" => $this->post_id
+								 );
+		$posts = bw_get_posts( $atts );
+		if ( $posts ) {
+			$count = count( $posts );
+		}
+	}
+	return $count ;
 }
 
 /**
+ * Count the APIs
+ *  
+ * [apiref] is a DIY shortcode which is expected to be defined like this:
+ * `
+ * <h3>APIs</h3> [apis] <h3>Classes</h3> [classes] <h3>Files</h3> [files] <h3>Hooks</h3> [hooks]
+ * `
  * 
+ * @return integer|null 
  */
 function count_apiref() {
 	if ( shortcode_exists( 'apiref' ) ) {
@@ -159,24 +222,43 @@ function count_apiref() {
 	return( null ); 
 }
 
-function count_documentation() {
-	return( 0 );
+/**
+ * Determines if field is registered to post type
+ *
+ * @param string $object_type the post type e.g. 'page'
+ * @param string $field_name the field name e.g. '_plugin_ref'
+ * @return bool true when the field has been registered
+ */
+function is_field_registered( $object_type, $field_name ) {
+	global $bw_mapping;
+	$registered = isset( $bw_mapping['field'][$object_type][$field_name] );
+	return( $registered );
 }
- /*
-	
-		
-    $tabs = array( "description" => "display_description"
-                 , "faq" => "display_faq"
-                 , "screenshots" => "display_screenshots"
-                 , "changelog" => "tabulate_pluginversion" 
-                 , "shortcodes" => "display_shortcodes" 
-                 , "apiref" => "display_apiref"
-                 , "documentation" => "display_documentation" 
-                 );
-	return( 1 );
 
+/**
+ * Counts the documentation pages
+ * 
+ * Checks for the relationship between page and _plugin_ref before counting the number of pages listed.
+ * Note: If none are listed then we don't need to check the documentation home page ( _oik_doc_home ) 
+ * since this page should itself have its _plugin_ref field set.
+ * 
+ * @return integer|null Number of documentation pages or null
+ */
+function count_documentation() {
+	$count = null;
+	if ( $this->is_field_registered( "page", "_plugin_ref" ) ) {
+		oik_require( "includes/bw_posts.inc" );
+		$atts = array( "post_type" => "page"
+								 , "meta_key" => "_plugin_ref"
+								 , "meta_value" => $this->post_id
+								 );
+		$posts = bw_get_posts( $atts );
+		if ( $posts ) {
+			$count = count( $posts );
+		}
+	}	
+	return $count ;
 }
-*/
 
 /**
  * Add the sections links for the plugin
@@ -194,8 +276,6 @@ function count_documentation() {
  *
  * We may display these for WP-a2z
  * 
- * [apiref] DIY shortcode breaks down into
- * <h3>APIs</h3> [apis] <h3>Classes</h3> [classes] <h3>Files</h3> [files] <h3>Hooks</h3> [hooks]
  */
 function additional_content_links( $post, $current_tab ) {
 	$tabs = $this->additional_content_tabs( $post ); 
@@ -236,6 +316,9 @@ function additional_content_links( $post, $current_tab ) {
  *
  */
 function additional_content( $post, $slug=null ) {
+	$this->post = $post;
+	$this->post_id = $post->ID;
+	$this->slug = $slug;
   $oik_tab = bw_array_get( $_REQUEST, "oik-tab", "description" ); 
   $additional_content = $this->additional_content_links( $post, $oik_tab );
   if ( $oik_tab ) {
