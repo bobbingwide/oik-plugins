@@ -194,7 +194,7 @@ function count_shortcodes() {
 	if ( is_post_type_viewable( "oik_shortcodes" ) ) {
 		oik_require( "includes/bw_posts.inc" );
 		$atts = array( "post_type" => "oik_shortcodes"
-								 , "meta_key" => "_plugin_ref"
+								 , "meta_key" => "_oik_sc_plugin"
 								 , "meta_value" => $this->post_id
 								 );
 		$posts = bw_get_posts( $atts );
