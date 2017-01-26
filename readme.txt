@@ -3,13 +3,16 @@ Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
 Requires at least: 4.2                               
-Tested up to: 4.6
-Stable tag: 1.15.6
+Tested up to: 4.7.1
+Stable tag: 1.15.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 oik-plugins server for FREE and Premium oik-plugins
+
+Changes in v1.15.7
+* Display of a tab on the oik-plugin details page is now dependent upon both the plugin type and the website content. 
 
 Changes in v1.15.5
 * Supports cloning of premium plugin version attached zip files
@@ -69,6 +72,9 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.15.7 =
+Improves display of tabs depending on content. Tested with WordPress 4.7.1 and WordPress Multisite.
+
 = 1.15.6 = 
 Required where there are more than 10 FAQs for a plugin. Tested with WordPress 4.6 and WordPress Multisite. 
 
@@ -161,6 +167,10 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 == Changelog ==
+= 1.15.7 =
+* Changed: Improve support for basic plugin documentation [github bobbingwide oik-plugins issue 9]
+* Tested: With WordPress 4.7.1 and WordPress Multisite
+
 = 1.15.6 = 
 * Changed: Allow for unlimited FAQs in the bw_accordion shortcode [github bobbingwide oik-plugins issue 7]
 * Changed: Associate the _component_version virtual field to oik-plugins [github bobbingwide oik-plugins issue 6]
