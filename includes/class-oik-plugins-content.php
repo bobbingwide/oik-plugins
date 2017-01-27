@@ -251,6 +251,7 @@ function count_documentation() {
 		$atts = array( "post_type" => "page"
 								 , "meta_key" => "_plugin_ref"
 								 , "meta_value" => $this->post_id
+								 , "post_parent" => "."
 								 );
 		$posts = bw_get_posts( $atts );
 		if ( $posts ) {
