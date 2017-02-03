@@ -3,13 +3,16 @@ Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
 Requires at least: 4.2                               
-Tested up to: 4.7.1
-Stable tag: 1.15.7
+Tested up to: 4.7.2
+Stable tag: 1.15.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 oik-plugins server for FREE and Premium oik-plugins
+
+Changes in v1.15.8
+* Display of the API ref tab depends on whether or not any files have been parsed for the plugin.
 
 Changes in v1.15.7
 * Display of a tab on the oik-plugin details page is now dependent upon both the plugin type and the website content. 
@@ -72,6 +75,9 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.15.8 = 
+Improves display of the API ref tabl. Tested with WordPress 4.7.2 and WordPress Multisite. 
+
 = 1.15.7 =
 Improves display of tabs depending on content. Tested with WordPress 4.7.1 and WordPress Multisite.
 
@@ -167,6 +173,10 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 == Changelog ==
+= 1.15.8 =
+* Changed: Improve display of the API ref tab [github bobbingwide oik-plugins issue 9]
+* Tested: With WordPress 4.7.2 and WordPress Multisite
+
 = 1.15.7 =
 * Changed: Improve support for basic plugin documentation [github bobbingwide oik-plugins issue 9]
 * Tested: With WordPress 4.7.1 and WordPress Multisite

@@ -206,18 +206,50 @@ function count_shortcodes() {
 }
 
 /**
+ * Counts the files.
+ 
+ */
+function count_files() {
+	$count = $this->count_viewable( "oik_file", "_oik_api_plugin", $this->post_id );
+	return $count ;
+}
+
+/**
+ * Count the viewable items
+ */
+function count_viewable( $post_type, $meta_key, $meta_value ) {
+	$count = null;
+	if ( is_post_type_viewable( $post_type ) ) {
+		oik_require( "includes/bw_posts.inc" );
+		$atts = array( "post_type" => $post_type
+								 , "meta_key" => $meta_key
+								 , "meta_value" => $meta_value
+								 );
+		$posts = bw_get_posts( $atts );
+		if ( $posts ) {
+			$count = count( $posts );
+		}
+	}
+	return $count ;
+}
+
+
+/**
  * Count the APIs
  *  
  * [apiref] is a DIY shortcode which is expected to be defined like this:
  * `
  * <h3>APIs</h3> [apis] <h3>Classes</h3> [classes] <h3>Files</h3> [files] <h3>Hooks</h3> [hooks]
  * `
+ * If it's defined we'll use it if we can also find some content. Using count_files() should be good enough.
+ * 
  * 
  * @return integer|null 
  */
 function count_apiref() {
 	if ( shortcode_exists( 'apiref' ) ) {
-		return( 1 );
+		$count = $this->count_files();
+		return( $count );
 	}
 	return( null ); 
 }
