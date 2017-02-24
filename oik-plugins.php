@@ -214,18 +214,17 @@ function oik_register_oik_plugin() {
   bw_register_post_type( $post_type, $post_type_args );
 	
 	if ( oik_require_lib( "bobbfunc" ) ) {
-  
-
-  bw_dtt( "_oikp_slug", "plugin folder name (e.g. oik)" );
-  $oikp_name = bw_dtt( "_oikp_name", "plugin file name (e.g. oik/oik.php)" );
-  $oikp_git = bw_dtt( "_oikp_git", "GitHub repository name (e.g. bobbingwide/oik)");
-  }
+		bw_dtt( "_oikp_slug", "plugin folder name (e.g. oik)" );
+		$oikp_name = bw_dtt( "_oikp_name", "plugin file name (e.g. oik/oik.php)" );
+		$oikp_git = bw_dtt( "_oikp_git", "GitHub repository name (e.g. bobbingwide/oik)");
+	}
   bw_register_field( "_oikp_type", "select", "Plugin type", array( '#options' => bw_plugin_types() ) ); 
   bw_register_field( "_oikp_slug", "text", "Plugin slug", array( '#hint' => "_oikp_slug" ) ); 
   bw_register_field( "_oikp_name", "text", "Plugin name", array( '#hint' => $oikp_name ) ); 
   bw_register_field( "_oikp_desc", "text", "Description" ); 
   bw_register_field( "_oikp_git", "text", "GitHub repository", array( "#hint" => $oikp_git ) );
-  // bw_register_field( "_oikp_banner", "noderef", "banner image link", array( '#type' => 'attachment', '#optional' => true ) );  
+  // bw_register_field( "_oikp_banner", "noderef", "banner image link", array( '#type' => 'attachment', '#optional' => true ) );
+	bw_register_field( "_oikp_uri", "URL", "Plugin URI", array( '#hint' => 'optional', '#theme' => null ) );   
 
   /** Currently we support two different systems for delivering Premium plugins: WooCommerce and Easy Digital Downloads 
    * The Purchasable product should be completed for each Premium oik plugin (and Other premium plugin? )
@@ -233,7 +232,7 @@ function oik_register_oik_plugin() {
   $purchasable_product_type = array();
   $purchasable_product_type[] = "download"; 
   $purchasable_product_type[] = "product"; 
-  bw_register_field( "_oikp_prod", "noderef", "Purchasable product", array( '#type' => $purchasable_product_type, '#optional' => true ) );   
+  bw_register_field( "_oikp_prod", "noderef", "Purchasable product", array( '#type' => $purchasable_product_type, '#optional' => true, '#theme_null' => false ) );   
 	bw_register_field_for_object_type( "_component_version", $post_type );
   bw_register_field_for_object_type( "_oikp_type", $post_type );
   bw_register_field_for_object_type( "_oikp_slug", $post_type );
@@ -242,6 +241,7 @@ function oik_register_oik_plugin() {
 	
   bw_register_field_for_object_type( "_oikp_git", $post_type );
   bw_register_field_for_object_type( "_oikp_prod", $post_type );
+	bw_register_field_for_object_type( "_oikp_uri", $post_type );
   // bw_register_field_for_object_type( "_oikp_banner", $post_type );
   oikp_columns_and_titles( $post_type );
 }
