@@ -213,19 +213,15 @@ function oikp_download__example( $shortcode='oikp_download' ) {
 /**
  * Produces a download link when no plugin version is available.
  *
- * $plugin_type | blah | 
- * ------------ | ----- |
- * 0=None				|      | Already catered for
- * 1=WordPress  |      | Already catered for
- * 2=FREE oik plugin |  | Create a link to oik-plugins.com
- * 
-  $plugin_types = array( 0 => "None"
-                       , 1 => "WordPress plugin"
-                       , 2 => "FREE oik plugin"
-                       , 3 => "Premium oik plugin"
-                       , 4 => "Other premium plugin"
-                       , 5 => "Bespoke plugin"
-                       , 6 => "WordPress and FREE plugin"
+ * $plugin_type           | Processing 
+ * -----------------      | ----- 
+ * 0=None				          | Don't create a link
+ * 1=WordPress            | Create a link to download from wordpress.org - if we want another link then use [bw_plug]
+ * 2=FREE oik plugin      | Create a link to oik-plugins.com
+ * 3=Premium oik plugin   |	Create a link to oik-plugins.com
+ * 4=Other premium plugin |	Create a link using the Plugin URI
+ * 5=Bespoke plugin       | Create a link using the Plugin URI
+ * 6=WordPress and FREE plugin |   treat as 1 and 2
  *
  * @param object $post - the oik-plugins object
  * @param string $class - class for the link
@@ -244,7 +240,34 @@ function _oikp_download_version_not_available( $post, $class, $slug ) {
 			break;
 			
 		case 2: 
-			_oikp_download_from_oikplugins( $post, $class, $slug );
+			$text = __( "Download from" );
+			$text .= "&nbsp;";
+			$text .= "oik-plugins.com";
+			_oikp_download_from_oikplugins( $post, $class, $slug, $text );
+			break;
+			
+		case 3:
+			$text = __( "Purchase from" );
+			$text .= "&nbsp;";
+			$text .= "oik-plugins.com";
+			_oikp_download_from_oikplugins( $post, $class, $slug, $text );
+			break;
+			
+		case 4:
+			$text .= $slug;
+			$text .= "&nbsp;";
+			$text .= __( "home" );
+			_oikp_download_from_uri( $post, $class, $slug, $text );
+			break;
+			
+			
+		case 6:
+			_oikp_download_wordpressversion( $post, $slug );
+			
+			$text = __( "Download from" );
+			$text .= "&nbsp;";
+			$text .= "oik-plugins.com";
+			_oikp_download_from_oikplugins( $post, $class, $slug, $text );
 			break;
 		
 		
@@ -253,14 +276,25 @@ function _oikp_download_version_not_available( $post, $class, $slug ) {
 	}
 }
 
-function _oikp_download_from_oikplugins( $post, $class, $slug ) {
-	$text = __( "Download from" );
-	$text .= "&nbsp;";
-	$text .= "oik-plugins.com";
+/**
+ * Creates a link to oik-plugins
+ */
+function _oikp_download_from_oikplugins( $post, $class, $slug, $text ) {
 	$url = oik_get_plugins_server();
 	$url .= "/oik-plugins/";
 	$url .= $slug; 
 	alink( $class, $url, $text );
+}
+
+
+/**
+ * Creates a link to the plugin home 
+ */
+function _oikp_download_from_uri( $post, $class, $slug, $text ) {
+	$oikp_uri = get_post_meta( $post->ID, "_oikp_uri", true );
+	if ( $oikp_uri ) {
+		alink( $class, $oikp_uri, $text );
+	}
 }
 
   
