@@ -1,4 +1,4 @@
-<?php // (C) Copyright Bobbing Wide 2012-2015
+<?php // (C) Copyright Bobbing Wide 2012-2017
 
 /**
  * Display EDD purchase link for a premium plugin
@@ -174,15 +174,7 @@ function oikp_download( $atts=null ) {
 					_oikp_download_plugin_version( $plugin_version, $post, $class . " previous", $slug );
 				} 
 			} else {
-				$plugin_type = get_post_meta( $post->ID, "_oikp_type", true );
-				if ( $plugin_type == 0 ) {
-					//  **?** Don't do anything yet
-					// alink( null, "http://wordpress.org", "
-				} elseif ( $plugin_type == 1 ) {
-					_oikp_download_wordpressversion( $post, $slug );
-				} else {  
-					p( "$plugin: latest version not available for download" );
-				}  
+					_oikp_download_version_not_available( $post, $class, $slug );
 			}
 		}	   
 	} else {
@@ -217,5 +209,59 @@ function oikp_download__example( $shortcode='oikp_download' ) {
   $example = "plugin=bbboing";
   bw_invoke_shortcode( $shortcode, $example, $text );
 }
+
+/**
+ * Produces a download link when no plugin version is available.
+ *
+ * $plugin_type | blah | 
+ * ------------ | ----- |
+ * 0=None				|      | Already catered for
+ * 1=WordPress  |      | Already catered for
+ * 2=FREE oik plugin |  | Create a link to oik-plugins.com
+ * 
+  $plugin_types = array( 0 => "None"
+                       , 1 => "WordPress plugin"
+                       , 2 => "FREE oik plugin"
+                       , 3 => "Premium oik plugin"
+                       , 4 => "Other premium plugin"
+                       , 5 => "Bespoke plugin"
+                       , 6 => "WordPress and FREE plugin"
+ *
+ * @param object $post - the oik-plugins object
+ * @param string $class - class for the link
+ * @param string $slug - the plugin name
+ * 
+ */
+function _oikp_download_version_not_available( $post, $class, $slug ) {
+	$plugin_type = get_post_meta( $post->ID, "_oikp_type", true );
+	switch ( $plugin_type ) {
+		case 0:
+			//  **?** Don't do anything yet
+			// alink( null, "http://wordpress.org", "
+			break;
+		case 1:
+			_oikp_download_wordpressversion( $post, $slug );
+			break;
+			
+		case 2: 
+			_oikp_download_from_oikplugins( $post, $class, $slug );
+			break;
+		
+		
+		default:
+			p( "$slug: latest version not available for download" );
+	}
+}
+
+function _oikp_download_from_oikplugins( $post, $class, $slug ) {
+	$text = __( "Download from" );
+	$text .= "&nbsp;";
+	$text .= "oik-plugins.com";
+	$url = oik_get_plugins_server();
+	$url .= "/oik-plugins/";
+	$url .= $slug; 
+	alink( $class, $url, $text );
+}
+
   
 
