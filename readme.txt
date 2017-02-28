@@ -4,7 +4,7 @@ Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
 Requires at least: 4.2                               
 Tested up to: 4.7.2
-Stable tag: 1.15.8
+Stable tag: 1.15.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,8 +75,11 @@ Yes - see above
 
 
 == Upgrade Notice ==
+= 1.15.9 =
+
+
 = 1.15.8 = 
-Improves display of the API ref tabl. Tested with WordPress 4.7.2 and WordPress Multisite. 
+Improves display of the API ref table. Tested with WordPress 4.7.2 and WordPress Multisite. 
 
 = 1.15.7 =
 Improves display of tabs depending on content. Tested with WordPress 4.7.1 and WordPress Multisite.
@@ -173,6 +176,9 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 == Changelog ==
+= 1.15.9 =
+* Added: Create download link to oik-plugins for an oik-plugin with no plugin version [github bobbingwide oik-plugins issue 10]
+
 = 1.15.8 =
 * Changed: Improve display of the API ref tab [github bobbingwide oik-plugins issue 9]
 * Tested: With WordPress 4.7.2 and WordPress Multisite
