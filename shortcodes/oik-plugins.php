@@ -254,13 +254,13 @@ function _oikp_download_version_not_available( $post, $class, $slug ) {
 			break;
 			
 		case 4:
-			$text .= $slug;
+		case 5:
+			$text = $slug;
 			$text .= "&nbsp;";
 			$text .= __( "home" );
 			_oikp_download_from_uri( $post, $class, $slug, $text );
 			break;
-			
-			
+		
 		case 6:
 			_oikp_download_wordpressversion( $post, $slug );
 			
