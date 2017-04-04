@@ -271,7 +271,7 @@ function bw_function_namify( $name ) {
 if ( !function_exists( "oikp_columns_and_titles" ) ) {
 function oikp_columns_and_titles( $post_type ) {
   $post_type_namify = bw_function_namify( $post_type );
-  add_filter( "manage_edit-${post_type}_columns", "${post_type_namify}_columns", 10, 2 );
+  add_filter( "manage_edit-${post_type}_columns", "${post_type_namify}_columns", 10 );
   add_action( "manage_${post_type}_posts_custom_column", "bw_custom_column_admin", 10, 2 );
   add_filter( "oik_table_fields_${post_type}", "${post_type_namify}_fields", 10, 2 );
   //add_filter( "oik_table_titles_${post_type}", "${post_type_namify}_titles", 10, 3 ); 
@@ -281,7 +281,8 @@ function oikp_columns_and_titles( $post_type ) {
 /**
  * Return the columns to be displayed in the All post_type display admin page
  */
-function oik_plugins_columns( $columns, $arg2=null ) {
+function oik_plugins_columns( $columns ) {
+	//bw_backtrace();
   $columns['_oikp_type'] = __("Type"); 
   $columns['_oikp_slug'] = __("Slug" );
   $columns['_oikp_name'] = __("Name" );
@@ -394,7 +395,7 @@ function oik_register_oik_pluginversion_fields( $post_type ) {
   oikp_columns_and_titles( $post_type );
 }
 
-function oik_pluginversion_columns( $columns, $args ) {
+function oik_pluginversion_columns( $columns ) {
   $columns['_oikpv_version'] = __("Version"); 
   $columns['_oikpv_plugin'] = __("Plugin" );
   $columns['_oikpv_download_count'] = __("Downloads" );
@@ -442,8 +443,8 @@ function oik_register_oik_premiumversion() {
 }
 
 
-function oik_premiumversion_columns( $columns, $args ) {
-  return( oik_pluginversion_columns( $columns, $args) );
+function oik_premiumversion_columns( $columns ) {
+  return( oik_pluginversion_columns( $columns ) );
 }
 
 /**
