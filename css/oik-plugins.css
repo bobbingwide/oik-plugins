@@ -1,18 +1,22 @@
-/* (C) Copyright Bobbing Wide 2015 */
+/* (C) Copyright Bobbing Wide 2015-2017 */
 /* Styling for the output of oik-plugins to be similar to wordpress.org for the TwentyTwelve theme
    and different for Genesis based themes
 */ 
 
 
 div.plugin-info { width: 100%; }
-div.plugin-body { background-color: #ffffff; margin-top: 0px; padding: 10px 20px; }
+div.plugin-body { 
+	background-color: #ffffff; 
+	margin-top: 0px; 
+	padding: 10px 10px; 
+}
 div.plugin-info:after { clear: left; }
 
 .plugin-info ul#sections li {
 	line-height: 1;
 	display: block;
 	float: left;
-	padding: 8px 8px 9px;
+	padding: 8px 8px 9px 0px;
 	margin: 0;
 }
 
@@ -54,6 +58,10 @@ div.plugin-info:after { clear: left; }
 	
 	box-shadow: 0 8px 6px -6px #5b6021;
 
+}
+
+.plugin-info ul#sections {
+	margin-left: 20px;
 }
 
 
