@@ -103,8 +103,13 @@ function oikp_increment_downloads( $id ) {
 } 
 
 /**
- * Deliver the plugin version requested
-*/ 
+ * Delivers the plugin version requested
+ * 
+ * @param string $plugin plugin name - slug of the post
+ * @param string $version plugin version
+ * @param string $apikey may be blank
+ * @param string $id plugin version ID
+ */ 
 function oikp_download_file( $plugin, $version, $apikey, $id ) {
   $plugin_version = get_post( $id );  
   bw_trace2( $plugin_version );
@@ -118,7 +123,8 @@ function oikp_download_file( $plugin, $version, $apikey, $id ) {
         $file = oikp_create_new_file_name( $file ); 
       } else {
         $upload_dir = wp_upload_dir();
-        $baseurl = $upload_dir['baseurl'];
+				bw_trace2( $upload_dir, "Upload dir" );
+        $baseurl = $upload_dir['basedir'];
         $file = $baseurl . "/". $file;
       }
       oikp_force_download( $file );  
