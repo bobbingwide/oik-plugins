@@ -1,16 +1,22 @@
 # oik plugins server 
 ![banner](https://raw.githubusercontent.com/bobbingwide/oik-plugins/master/assets/oik-plugins-banner-772x250.jpg)
 * Contributors: bobbingwide
-* Donate link: http://www.oik-plugins.com/oik/oik-donate/
+* Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: plugins, server, FREE, premium, shortcodes
-* Requires at least: 4.2
-* Tested up to: 4.7.2
-* Stable tag: 1.15.9
+* Requires at least: 4.9
+* Tested up to: 4.9
+* Stable tag: 1.16.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description 
 oik-plugins server for FREE and Premium oik-plugins
+
+Changes in v1.16.0
+* See change log
+
+Changes in v1.15.9
+* See change log
 
 Changes in v1.15.8
 * Display of the API ref tab depends on whether or not any files have been parsed for the plugin.
@@ -61,23 +67,20 @@ The information displayed on the plugin update page now expands shortcodes.
 
 ## Frequently Asked Questions 
 # Where is the FAQ? 
-[oik FAQ](http://www.oik-plugins.com/oik/oik-faq)
-
-# Is there a support forum? 
-Yes - please use the standard WordPress forum - http://wordpress.org/tags/oik?forum_id=10
-
-# Can I get support? 
-Yes - see above
+[oik FAQ](https://www.oik-plugins.com/oik/oik-faq)
 
 ## Screenshots 
 1. Fields for the oik-plugin custom post type
-2. Fields for the oik_pluginversion custom post type (prior to removal of "Requires" and "Tested to"
+2. Fields for the oik_pluginversion custom post type (prior to removal of "Requires" and "Tested to")
 3. Fields for a Premium oik-plugin showing the Purchasable product
 
 
 ## Upgrade Notice 
-# 1.15.9 
+# 1.16.0 
+Now depends on oik v3.2.1 and oik-fields v1.50.0.
 
+# 1.15.9 
+Required for oik-plugins, WP-a2z and bobbingwide.com
 
 # 1.15.8 
 Improves display of the API ref table. Tested with WordPress 4.7.2 and WordPress Multisite.
@@ -177,8 +180,16 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 ## Changelog 
+# 1.16.0 
+* Changed: Compatibility with oik v3.2.1 https://github.com/bobbingwide/oik-plugins/issues/14
+* Changed: Continues to improve the display of tabs and changelog for iPad landscape
+* Fixed: file_get_contents(): SSL operation failed with code 1 https://github.com/bobbingwide/oik-plugins/issues/13
+* Changed: Support PHP 7.1 https://github.com/bobbingwide/oik-plugins/issues/11
+* Tested: With WordPress 4.9 and WordPress Multisite
+
 # 1.15.9 
 * Added: Create download link to oik-plugins for an oik-plugin with no plugin version https://github.com/bobbingwide/oik-plugins/issues/10
+* Added: Add a link for bespoke plugins (type 5) if required
 
 # 1.15.8 
 * Changed: Improve display of the API ref tab https://github.com/bobbingwide/oik-plugins/issues/9
