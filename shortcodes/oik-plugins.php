@@ -136,7 +136,7 @@ function _oikp_download_plugin_version( $plugin_version, $post, $class, $slug ) 
 function oikp_download( $atts=null ) {
 	oik_require( "includes/bw_posts.inc" );
 	oik_require( "feed/oik-plugins-feed.php", "oik-plugins" );
-	oik_require( "admin/oik-admin.inc" );
+	oik_require( "admin/oik-admin.php" );
 	// @TODO **?** return the plugin slug from the currently selected $post if it is of type "oik-plugins"
 	$slug = null;
 	$class = bw_array_get( $atts, 'class', NULL ) . "download" ;
@@ -192,8 +192,11 @@ function oikp_download__help( $shortcode='oikp_download' ) {
   return( "Produce a download button for a plugin" );
 }
 
+/**
+ * Syntax hook for [oikp_download] shortcode
+ */
 function oikp_download__syntax( $shortcode='oikp_download' ) {
-  oik_require( "includes/oik-sc-help.inc" );
+  oik_require( "includes/oik-sc-help.php" );
   $syntax = array( "plugin" => bw_skv( "oik", "plugin", "name of the plugin" ) 
 //                 , "text" => bw_skv( "dummy", "", "text for the button" )
 //                 , "title" => bw_skv( "as text", "", "title for the tooltip" )
@@ -202,9 +205,11 @@ function oikp_download__syntax( $shortcode='oikp_download' ) {
   return( $syntax ); 
 }
 
+/**
+ * Example hook for [oikp_download] shortcode
+ */
 function oikp_download__example( $shortcode='oikp_download' ) {
-
-  oik_require( "includes/oik-sc-help.inc" );
+  oik_require( "includes/oik-sc-help.php" );
   $text = "To create a button to download the bbboing plugin" ;
   $example = "plugin=bbboing";
   bw_invoke_shortcode( $shortcode, $example, $text );

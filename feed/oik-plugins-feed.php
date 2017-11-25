@@ -4,7 +4,7 @@ Author: bobbingwide
 Author URI: http://www.bobbingwide.com
 License: GPL2
 
-    Copyright 2012-2015 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012-2017 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -225,7 +225,7 @@ function _oikp_lazy_redirect_check_these( $oik_plugin_action ) {
 function oikp_perform_update_check( $plugin, $current_version=null ) {
   $response = new stdClass;
   //$version = bw_array_get( $_REQUEST, "version", null );
-  oik_require( "admin/oik-admin.inc" );
+  oik_require( "admin/oik-admin.php" );
    
   $slug = bw_get_slug( $plugin );   
   $post = oikp_load_plugin( $slug );
@@ -289,7 +289,7 @@ function oikp_lazy_redirect( $oik_plugin_action ) {
  * @return post|null
  */
 function oikp_load_plugin( $slug ) {
-  oik_require( "includes/bw_posts.inc" );
+  oik_require( "includes/bw_posts.php" );
   $atts = array();
   $atts['post_type'] = "oik-plugins";
   // $atts['name'] = $slug;
@@ -314,7 +314,7 @@ function oikp_load_plugin( $slug ) {
  * @return object - the pluginversion post
  */
 function oikp_load_pluginversion( $post ) {
-  oik_require( "includes/bw_posts.inc" );
+  oik_require( "includes/bw_posts.php" );
   //$post_types = array( 2 => "oik_pluginversion"
   //                   , 3 => "oik_premiumversion"
   //                   
@@ -506,7 +506,7 @@ function oikp_get_tested( $version ) {
 
 
 function oikp_get_attachment( $version ) {
-  oik_require( "includes/bw_posts.inc" );
+  oik_require( "includes/bw_posts.php" );
   $atts = array( "post_type" => "attachment" 
                , "post_parent" => $version->ID
                , "numberposts" => 1
@@ -624,7 +624,7 @@ function bw_get_author_profile( $post ) {
  * @param ID $post - 
  */
 function oikp_get_FAQ( $post ) {
-  oik_require( "admin/oik-admin.inc" );
+  oik_require( "admin/oik-admin.php" );
   $faq = bw_get_option( "faq", "bw_plugins_server" );
   if ( $faq ) {
     $post = bw_get_post( $faq, "page" );

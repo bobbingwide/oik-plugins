@@ -2,11 +2,11 @@
 /**
 Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
-Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-plugins
+Plugin URI: https://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.15.9
+Version: 1.16.0
 Author: bobbingwide
-Author URI: http://www.oik-plugins.com/author/bobbingwide
+Author URI: https://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-plugins
 Domain Path: /languages/
 License: GPLv2 or later
@@ -219,7 +219,7 @@ function oik_register_oik_plugin() {
 		$oikp_git = bw_dtt( "_oikp_git", "GitHub repository name (e.g. bobbingwide/oik)");
 	}
   bw_register_field( "_oikp_type", "select", "Plugin type", array( '#options' => bw_plugin_types() ) ); 
-  bw_register_field( "_oikp_slug", "text", "Plugin slug", array( '#hint' => "_oikp_slug" ) ); 
+  bw_register_field( "_oikp_slug", "text", "Plugin slug", array( '#hint' => "_oikp_slug" ) );
   bw_register_field( "_oikp_name", "text", "Plugin name", array( '#hint' => $oikp_name ) ); 
   bw_register_field( "_oikp_desc", "text", "Description" ); 
   bw_register_field( "_oikp_git", "text", "GitHub repository", array( "#hint" => $oikp_git ) );
@@ -802,11 +802,14 @@ function oikp_oik_validate_apikey( $return_value, $apikey ) {
 /**
  * Implement "admin_notices" for oik-plugins 
  * 
- * oik-plugins is now dependent upon oik v2.1 and oik-fields v1.33
- * oik-plugins is now dependent upon oik v2.2 and oik-fields v1.36
- * oik-plugins is now dependent upon oik v2.3 and oik-fields v1.39
- * oik-plugins v1.15.1 is now dependent upon v2.6 and oik-fields v1.40
- * oik-plugins v1.15.2 is now dependent upon oik v3.0.0-alpha.0820 and oik-fields v1.40
+ * Version | Dependencies
+ * ------- | -------------------------------
+ * v1.10   | oik v2.1 and oik-fields v1.33
+ * v1.11   | oik v2.2 and oik-fields v1.36
+ * v1.13   | oik v2.3 and oik-fields v1.39
+ * v1.15.1 | oik v2.6 and oik-fields v1.40
+ * v1.15.2 | oik v3.0.0-alpha.0820 and oik-fields v1.40
+ * v1.16.0 | oik v3.2.1 and oik-fields v1.50.0
  */ 
 function oikp_activation() {
   static $plugin_basename = null;
@@ -817,7 +820,7 @@ function oikp_activation() {
       require_once( "admin/oik-activation.php" );
     }  
   }  
-  $depends = "oik-fields:1.40,oik:3.0.0-alpha.0820";
+  $depends = "oik-fields:1.50,oik:3.2.1";
   oik_plugin_lazy_activation( __FILE__, $depends, "oik_plugin_plugin_inactive" );
 }
 
