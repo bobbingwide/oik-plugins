@@ -134,7 +134,7 @@ function _oikp_download_plugin_version( $plugin_version, $post, $class, $slug ) 
  * 
  */
 function oikp_download( $atts=null ) {
-	oik_require( "includes/bw_posts.inc" );
+	oik_require( "includes/bw_posts.php" );
 	oik_require( "feed/oik-plugins-feed.php", "oik-plugins" );
 	oik_require( "admin/oik-admin.php" );
 	// @TODO **?** return the plugin slug from the currently selected $post if it is of type "oik-plugins"
