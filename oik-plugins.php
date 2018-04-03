@@ -211,6 +211,7 @@ function oik_register_oik_plugin() {
   $post_type_args['taxonomies'] = array( "oik_tags" );
   $post_type_args['has_archive'] = true;
   $post_type_args['menu_icon'] = 'dashicons-admin-plugins';
+	$post_type_args['show_in_rest'] = true;
   bw_register_post_type( $post_type, $post_type_args );
 	
 	if ( oik_require_lib( "bobbfunc" ) ) {
@@ -367,6 +368,7 @@ function oik_register_oik_pluginversion() {
   $post_type_args['menu_icon'] = 'dashicons-shield';
   
   $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
+	$post_type_args['show_in_rest'] = true;
   bw_register_post_type( $post_type, $post_type_args );
   
   oik_register_oik_pluginversion_fields( $post_type );
@@ -438,6 +440,7 @@ function oik_register_oik_premiumversion() {
   $post_type_args['taxonomies'] = array( "required_version", "compatible_up_to" );
   $post_type_args['menu_icon'] = 'dashicons-shield-alt';
   $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
+	$post_type_args['show_in_rest'] = true;
   bw_register_post_type( $post_type, $post_type_args );
   oik_register_oik_pluginversion_fields( $post_type );
 }
