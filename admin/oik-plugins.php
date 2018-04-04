@@ -106,6 +106,7 @@ function oik_plugins_accumulate_version( $post, $plugin ) {
  */
 if ( !function_exists( "bw_array_add2" ) ) { 
 function bw_array_add2( &$array, $index, $index2, $amount ) {
+	$amount = intval( $amount );
   if ( ! isset($array[$index][$index2]) ) {
     $value = $amount;
   } else {
@@ -120,7 +121,7 @@ function bw_array_add2( &$array, $index, $index2, $amount ) {
  */
 function oik_plugins_add_version( $plugin, $version, $download, $updates ) {
   global $bw_plugin_totals;
-  $bw_plugin_totals['Total']['downloads'] = bw_array_add2( $bw_plugin_totals, "Total",  "downloads",$download ); 
+  $bw_plugin_totals['Total']['downloads'] = bw_array_add2( $bw_plugin_totals, "Total", "downloads", $download ); 
   $bw_plugin_totals['Total']['updates'] = bw_array_add2( $bw_plugin_totals, "Total", "updates", $updates );
   $bw_plugin_totals[$plugin]['downloads'] = bw_array_add2( $bw_plugin_totals, $plugin, "downloads", $download );
   $bw_plugin_totals[$plugin]['updates'] = bw_array_add2( $bw_plugin_totals, $plugin, "updates", $updates );
