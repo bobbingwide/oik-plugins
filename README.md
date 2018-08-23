@@ -4,8 +4,8 @@
 * Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: plugins, server, FREE, premium, shortcodes
 * Requires at least: 4.9
-* Tested up to: 4.9
-* Stable tag: 1.16.0
+* Tested up to: 4.9.8
+* Stable tag: 1.17.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ The information displayed on the plugin update page now expands shortcodes.
 
 
 ## Upgrade Notice 
+# 1.17.0 
+Upgrade for better support of downloads
+
 # 1.16.0 
 Now depends on oik v3.2.1 and oik-fields v1.50.0.
 
@@ -180,6 +183,12 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 ## Changelog 
+# 1.17.0 
+* Changed: Set show_in_rest = true for the CPTs https://github.com/bobbingwide/oik-plugins/issues/15
+* Changed: Correct bw_array_add2 https://github.com/bobbingwide/oik-plugins/issues/16
+* Fixed: Correct oikp_force_download https://github.com/bobbingwide/oik-plugins/issues/17
+* Changed: Hardcode support for cloning of oik-plugins CPTs https://github.com/bobbingwide/oik-plugins/issues/18
+
 # 1.16.0 
 * Changed: Compatibility with oik v3.2.1 https://github.com/bobbingwide/oik-plugins/issues/14
 * Changed: Continues to improve the display of tabs and changelog for iPad landscape
@@ -365,6 +374,6 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 ## Further reading 
 If you want to read more about the oik plugins then please visit the
-[oik plugin](http://www.oik-plugins.com/oik)
+[oik plugin](https://www.oik-plugins.com/oik)
 **"the oik plugin - for often included key-information"**
 
