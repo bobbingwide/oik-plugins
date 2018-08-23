@@ -4,7 +4,7 @@ Author: bobbingwide
 Author URI: http://www.bobbingwide.com
 License: GPL2
 
-    Copyright 2012-2017 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012-2018 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -98,7 +98,11 @@ function oikp_validate_apikey( $actual_version, $actual_plugin, $apikey ) {
 function oikp_increment_downloads( $id ) {
   $action = bw_array_get( $_REQUEST, "action", "download" );
   $count = get_post_meta( $id, "_oikpv_${action}_count", true );
-  $new_count = $count + 1;
+	if ( is_numeric( $count ) ) {
+		$new_count = $count + 1;
+	} else {
+		$new_count = 1;
+	}
   $success = update_post_meta( $id, "_oikpv_${action}_count", $new_count, $count  );
 } 
 
@@ -151,9 +155,18 @@ function oikp_download_file( $plugin, $version, $apikey, $id ) {
 function oikp_force_download( $file ) {
   bw_trace2();
   $file_content = file_get_contents( $file );  
+	$start = substr( $file_content, 0, 80 );
+	bw_trace2( $start, "Start of $file", false );
   $filename = basename( $file );
-  header( 'Content-type: application/force-download' );  
+	header('Content-Description: File Transfer');
+	header('Content-Type: application/zip');
+  //header( 'Content-type: application/force-download' );  
   header( "Content-Disposition: attachment; filename=\"$filename\"" );  
+	header('Content-Transfer-Encoding: binary');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	header('Content-Length: ' . filesize( $file ) );
   echo $file_content;  
   exit;
 }
@@ -543,7 +556,7 @@ function oikp_get_package( $post, $version, $new_version, $apikey=null, $action=
 
   $file = oikp_get_attachment( $version );
   if  ( $file ) {
-    $package = home_url( "/plugins/download" );
+    $package = home_url( "/plugins/download", bw_array_get( $_SERVER, 'REQUEST_SCHEME', null ) );
     $package = add_query_arg( array( "plugin" => $post->post_name
                                    , "version" => $new_version
                                    , "id" =>  $version->ID 
