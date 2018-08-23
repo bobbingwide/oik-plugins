@@ -4,7 +4,7 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: https://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.16.0
+Version: 1.16.1
 Author: bobbingwide
 Author URI: https://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-plugins
@@ -12,7 +12,7 @@ Domain Path: /languages/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-    Copyright 2012-2017 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012-2018 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -207,7 +207,7 @@ function oik_register_oik_plugin() {
   $post_type_args = array();
   $post_type_args['label'] = 'Plugins';
   $post_type_args['description'] = 'oik plugin';
-  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
+  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home', 'clone' );
   $post_type_args['taxonomies'] = array( "oik_tags" );
   $post_type_args['has_archive'] = true;
   $post_type_args['menu_icon'] = 'dashicons-admin-plugins';
@@ -367,7 +367,7 @@ function oik_register_oik_pluginversion() {
   
   $post_type_args['menu_icon'] = 'dashicons-shield';
   
-  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
+  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home', 'clone' );
 	$post_type_args['show_in_rest'] = true;
   bw_register_post_type( $post_type, $post_type_args );
   
@@ -439,7 +439,7 @@ function oik_register_oik_premiumversion() {
   $post_type_args['description'] = 'oik premium plugin version';
   $post_type_args['taxonomies'] = array( "required_version", "compatible_up_to" );
   $post_type_args['menu_icon'] = 'dashicons-shield-alt';
-  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home' );
+  $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home', 'clone' );
 	$post_type_args['show_in_rest'] = true;
   bw_register_post_type( $post_type, $post_type_args );
   oik_register_oik_pluginversion_fields( $post_type );
@@ -500,13 +500,16 @@ function oikp_check_post_type( $test_post_type="oik_premiumversion" ) {
 }
 
 /**
+ * Builds the external directory name
+ * 
  * For non Windows servers (e.g. Linux) we need to find the "home" directory and build $external_dir from there
- * @param string - required external directory name with leading and trailing slashes
- * @return string - external directory with "home" directory prepended
- * e.g
+ * e.g.
  * If [DOCUMENT_ROOT] => /home/t10scom/public_html
  * and $dir parameter is '/zipdir/'
  * then external_directory will become "/home/t10scom/zipdir/"
+ * 
+ * @param string - required external directory name with leading and trailing slashes
+ * @return string - external directory with "home" directory prepended
  */
 function oikp_build_external_dir( $dir ) {
   $external_dir = dirname( $_SERVER['DOCUMENT_ROOT'] );
