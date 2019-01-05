@@ -638,6 +638,8 @@ function oikp_the_post_oik_plugins( $post, $content ) {
  * Add some content before 'the_content' filtering completes for oik_pluginversion
  *
  * If neither [bw_fields] nor [bw_field is included in the content so far then append it.
+ * To cater for WordPress 5.0 and the fields block we've made the search less limiting
+ * ... now just looking for 'field', was '[bw_field'.
  *
  * @param post $post - the current post
  * @param string $content - the current content
@@ -646,7 +648,7 @@ function oikp_the_post_oik_plugins( $post, $content ) {
  */
 function oikp_the_post_oik_pluginversion( $post, $content ) {
   // bw_trace2();
-  if ( false === strpos( $post->post_content, "[bw_field" ) ) {
+  if ( false === strpos( $post->post_content, "field" ) ) {
     $additional_content = "[bw_fields]";
   } else {
     $additional_content = null;
