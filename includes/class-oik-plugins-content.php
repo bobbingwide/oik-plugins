@@ -1,4 +1,4 @@
-<?php // (C) Copyright Bobbing Wide 2015-2017
+<?php // (C) Copyright Bobbing Wide 2015-2019
 
 /**
  * Class: OIK_plugins_content
@@ -39,6 +39,7 @@ function additional_content_tabs( $post ) {
                , "screenshots" => "Screenshots"
                , "changelog" => "Changelog"
                , "shortcodes" => "Shortcodes"
+	            , "blocks" => "Blocks"
                , "apiref" => "API Ref"
                , "documentation" => "Documentation"
                );
@@ -205,6 +206,26 @@ function count_shortcodes() {
 	return $count ;
 }
 
+	/**
+	 * Counts the blocks
+	 */
+	function count_blocks() {
+		$count = null;
+		if ( is_post_type_viewable( "block" ) ) {
+			oik_require( "includes/bw_posts.php" );
+			$atts = array( "post_type" => "block"
+			, "meta_key" => "_oik_sc_plugin"
+			, "meta_value" => $this->post_id
+			);
+			$posts = bw_get_posts( $atts );
+			if ( $posts ) {
+				$count = count( $posts );
+			}
+		}
+		return $count ;
+
+	}
+
 /**
  * Counts the files.
  
@@ -359,7 +380,8 @@ function additional_content( $post, $slug=null ) {
                  , "faq" => "display_faq"
                  , "screenshots" => "display_screenshots"
                  , "changelog" => "tabulate_pluginversion" 
-                 , "shortcodes" => "display_shortcodes" 
+                 , "shortcodes" => "display_shortcodes"
+	            , "blocks" => "display_blocks"
                  , "apiref" => "display_apiref"
                  , "documentation" => "display_documentation" 
                  );
@@ -466,6 +488,18 @@ function display_screenshots( $post, $slug ) {
 function display_shortcodes( $post, $slug ) {
   $additional_content = "[codes posts_per_page=.]";
   return( $additional_content ); 
+}
+
+/**
+ * Display the blocks for the plugin
+ * @param $post
+ * @param $slug
+ *
+ * @return string
+ */
+function display_blocks( $post, $slug ) {
+	$additional_content = "[blocks posts_per_page=.]";
+	return $additional_content;
 }
 
 /**
