@@ -212,6 +212,7 @@ function oik_register_oik_plugin() {
   $post_type_args['has_archive'] = true;
   $post_type_args['menu_icon'] = 'dashicons-admin-plugins';
 	$post_type_args['show_in_rest'] = true;
+	$post_type_args['template'] = oikp_oik_plugins_CPT_template();
   bw_register_post_type( $post_type, $post_type_args );
 	
 	if ( oik_require_lib( "bobbfunc" ) ) {
@@ -224,8 +225,10 @@ function oik_register_oik_plugin() {
   bw_register_field( "_oikp_name", "text", "Plugin name", array( '#hint' => $oikp_name ) ); 
   bw_register_field( "_oikp_desc", "text", "Description" ); 
   bw_register_field( "_oikp_git", "text", "GitHub repository", array( "#hint" => $oikp_git ) );
-  // bw_register_field( "_oikp_banner", "noderef", "banner image link", array( '#type' => 'attachment', '#optional' => true ) );
-	bw_register_field( "_oikp_uri", "URL", "Plugin URI", array( '#hint' => 'optional', '#theme' => null ) );   
+ bw_register_field( "_oikp_uri", "URL", "Plugin URI", array( '#hint' => 'optional', '#theme' => null ) );
+ bw_register_field( "_oikp_dependency", "noderef", "Depends on", array( '#type' => 'oik-plugins', '#optional' => true, '#multiple' => 5, '#theme_null' => false ) );
+	// bw_register_field( "_oikp_banner", "noderef", "banner image link", array( '#type' => 'attachment', '#optional' => true ) );
+
 
   /** Currently we support two different systems for delivering Premium plugins: WooCommerce and Easy Digital Downloads 
    * The Purchasable product should be completed for each Premium oik plugin (and Other premium plugin? )
@@ -243,8 +246,20 @@ function oik_register_oik_plugin() {
   bw_register_field_for_object_type( "_oikp_git", $post_type );
   bw_register_field_for_object_type( "_oikp_prod", $post_type );
 	bw_register_field_for_object_type( "_oikp_uri", $post_type );
-  // bw_register_field_for_object_type( "_oikp_banner", $post_type );
+  bw_register_field_for_object_type( "_oikp_dependency", $post_type );
   oikp_columns_and_titles( $post_type );
+}
+
+function oikp_oik_plugins_CPT_template() {
+	$template = array();
+	$template[] = [ 'core/paragraph', [ 'placeholder' => 'Copy the plugin description'] ];
+	$template[] = [ 'core/shortcode', [ 'text' => '[bw_plug name=plugin banner=p]' ] ];
+	$template[] = [ 'core/paragraph', [ 'content' => 'This plugin provides xx blocks' ] ];
+	$template[] = [ 'core/more' ];
+	$template[] = [ 'oik-block/blocklist' ];
+	$template[] = [ 'core/shortcode', [ 'text' => '[bw_plug name=plugin table=y]' ] ];
+
+	return $template;
 }
 
 /** 
@@ -368,11 +383,24 @@ function oik_register_oik_pluginversion() {
   $post_type_args['menu_icon'] = 'dashicons-shield';
   
   $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home', 'clone' );
-	$post_type_args['show_in_rest'] = true;
+  $post_type_args['show_in_rest'] = true;
+  $post_type_args['template'] = oikp_oik_pluginversion_CPT_template();
   bw_register_post_type( $post_type, $post_type_args );
   
   oik_register_oik_pluginversion_fields( $post_type );
   
+}
+
+function oikp_oik_pluginversion_CPT_template() {
+	$template = array();
+	$template[] = [ 'core/paragraph', [ 'placeholder' => 'Copy the upgrade notice'] ];
+	$template[] = [ 'oik-block/fields', [ 'fields' => '[featured]' ] ];
+	$template[] = [ 'core/more' ];
+	$template[] = [ 'core/heading', ['content' => 'Changes'] ];
+	$template[] = [ 'oik-block/csv', [ 'content' => 'Change,Reference' ] ];
+	$template[] = [ 'core/file' ];
+
+	return $template;
 }
 
 /**
