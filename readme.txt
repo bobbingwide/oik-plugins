@@ -2,9 +2,9 @@
 Contributors: bobbingwide
 Donate link: https://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
-Requires at least: 4.9.8                             
-Tested up to: 5.0.2
-Stable tag: 1.18.0
+Requires at least: 5.0.3                            
+Tested up to: 5.1.0
+Stable tag: 1.19.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,9 @@ The information displayed on the plugin update page now expands shortcodes.
 
 
 == Upgrade Notice ==
+= 1.19.0 = 
+Upgrade for the plugin dependency field; used by oik-shortcodes and oik-loader
+
 = 1.18.0 =
 Upgrade for improved support of WordPress 5.0/Gutenberg and the Fields block
 
@@ -188,11 +191,18 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 == Changelog ==
+= 1.19.0 = 
+* Added: Add block templates for oik-plugins and oik_pluginversion.,[github bobbingwide oik-plugins issues 19]
+* Added: Add plugin dependency field ( _oikp_dependency ), [github bobbingwide oik-plugins issues 20]
+* Tested: With WordPress 5.1 and WordPress Multi Site
+* Tested: With PHP 7.2
+* Tested: With Gutenberg 5.1.1
+
 = 1.18.0 =
 * Added: Blocks tab to display related Blocks, [github bobbingwide oik-plugins issues 15]
 * Changed: Cater for use of Fields block rather than [bw_code bw_fields] shortcode, [github bobbingwide oik-plugins issue 15 ]
 * Tested: With WordPress 5.0.2
-* Tested: With Gutenberb 4.7.1
+* Tested: With Gutenberg 4.7.1
 * Tested: With PHP 7.2
 
 = 1.17.0 =
