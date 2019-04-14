@@ -117,7 +117,7 @@ function check_content_for_tabs( $tabs ) {
  * @return integer|null - the number of items to be displayed. 0 is acceptable for some tabs.
  */
 function check_content_for_tab( $tab ) {
-	$count = 0;
+	$count = null;
 	$method = "count_$tab";
 	if ( is_callable( array( $this, $method  ) ) ) {
 		$count = $this->$method();
@@ -228,15 +228,26 @@ function count_shortcodes() {
 
 /**
  * Counts the files.
- 
+ *
  */
 function count_files() {
 	$count = $this->count_viewable( "oik_file", "_oik_api_plugin", $this->post_id );
 	return $count ;
 }
+/**
+ * Counts the APIs.
+ *
+ *
+ */
+function count_apis() {
+	$count = $this->count_viewable( "oik_api", "_oik_api_plugin", $this->post_id );
+	return $count ;
+}
 
 /**
  * Count the viewable items
+ *
+ * We don't actually count all of them since it can produce a Fatal error when there are too many.
  */
 function count_viewable( $post_type, $meta_key, $meta_value ) {
 	$count = null;
@@ -245,6 +256,7 @@ function count_viewable( $post_type, $meta_key, $meta_value ) {
 		$atts = array( "post_type" => $post_type
 								 , "meta_key" => $meta_key
 								 , "meta_value" => $meta_value
+			, "numberposts" => 2
 								 );
 		$posts = bw_get_posts( $atts );
 		if ( $posts ) {
