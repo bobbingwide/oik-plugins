@@ -228,7 +228,7 @@ function oik_register_oik_plugin() {
  bw_register_field( "_oikp_uri", "URL", "Plugin URI", array( '#hint' => 'optional', '#theme' => null ) );
  bw_register_field( "_oikp_dependency", "noderef", "Depends on", array( '#type' => 'oik-plugins', '#optional' => true, '#multiple' => 5, '#theme_null' => false ) );
 	// bw_register_field( "_oikp_banner", "noderef", "banner image link", array( '#type' => 'attachment', '#optional' => true ) );
-
+	bw_register_field( '_oikp_block_count', 'numeric', 'Blocks delivered', array( '#theme_null' => false ));
 
   /** Currently we support two different systems for delivering Premium plugins: WooCommerce and Easy Digital Downloads 
    * The Purchasable product should be completed for each Premium oik plugin (and Other premium plugin? )
@@ -247,6 +247,7 @@ function oik_register_oik_plugin() {
   bw_register_field_for_object_type( "_oikp_prod", $post_type );
 	bw_register_field_for_object_type( "_oikp_uri", $post_type );
   bw_register_field_for_object_type( "_oikp_dependency", $post_type );
+  bw_register_field_for_object_type( '_oikp_block_count', $post_type );
   oikp_columns_and_titles( $post_type );
 }
 
