@@ -601,8 +601,11 @@ if ( !function_exists( "bw_get_userdata" ) ) {
 function bw_get_userdata( $id, $field, $default ) {
   $userdata = get_userdata( $id );
   bw_trace2( $userdata, "userdata" );
-  
-  $value = $userdata->data->$field;
+  //bw_backtrace();
+  $value = null;
+  if ( $userdata ) {
+	  $value = $userdata->data->$field;
+  }
   bw_trace2( $value );
   return( $value );
 }
@@ -621,8 +624,9 @@ function bw_get_author_name( $post ) {
   $author = $post->post_author;
   oik_require( "admin/oik-plugins.php", "oik-plugins" );
   $users = bw_user_list();
+  bw_trace2( $users, "users", false );
   $author_name = bw_array_get( $users, $author, "bobbingwide" );
-  $url = bw_get_userdata( $author, "user_url", "http://www.bobbingwidewebdesign.com/about/herb/" );
+  $url = bw_get_userdata( $author, "user_url", "https://www.bobbingwide.com/about-bobbing-wide" );
   $link = retlink( null, $url, $author_name );
   return( $link );
 }
