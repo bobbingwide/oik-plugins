@@ -243,6 +243,24 @@ function count_apis() {
 	$count = $this->count_viewable( "oik_api", "_oik_api_plugin", $this->post_id );
 	return $count ;
 }
+	/**
+	 * Counts the Classes.
+	 *
+	 *
+	 */
+	function count_classes() {
+		$count = $this->count_viewable( "oik_class", "_oik_api_plugin", $this->post_id );
+		return $count ;
+	}
+	/**
+	 * Counts the Hooks.
+	 *
+	 *
+	 */
+	function count_hooks() {
+		$count = $this->count_viewable( "oik_hook", "_oik_hook_plugin", $this->post_id );
+		return $count ;
+	}
 
 /**
  * Count the viewable items
