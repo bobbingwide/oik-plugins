@@ -3,9 +3,9 @@
 * Contributors: bobbingwide
 * Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: plugins, server, FREE, premium, shortcodes
-* Requires at least: 5.0.3
-* Tested up to: 5.1.0
-* Stable tag: 1.19.0
+* Requires at least: 5.0.0
+* Tested up to: 5.3.0
+* Stable tag: 1.20.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,9 @@ The information displayed on the plugin update page now expands shortcodes.
 
 
 ## Upgrade Notice 
+# 1.20.0 
+Update for Blocks delivered field. For use on blocks.wp-a2.org
+
 # 1.19.0 
 Upgrade for the plugin dependency field; used by oik-shortcodes and oik-loader
 
@@ -192,6 +195,14 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 ## Changelog 
+# 1.20.0 
+* Changed: Improve counting to determine which tabs to display,https://github.com/bobbingwide/oik-plugins/issues/9
+* Added: Add Blocks delivered field.,https://github.com/bobbingwide/oik-plugins/issues/22
+* Fixes: Check userdata is set before accessing properties. Change default user_url value.,https://github.com/bobbingwide/oik-plugins/issues/21
+* Tested: With WordPress 5.3 and WordPress Multi Site
+* Tested: With PHP 7.3
+* Tested: With PHPUnit 8
+
 # 1.19.0 
 * Added: Add block templates for oik-plugins and oik_pluginversion.,https://github.com/bobbingwide/oik-plugins/issues/19
 * Added: Add plugin dependency field ( _oikp_dependency ), https://github.com/bobbingwide/oik-plugins/issues/20
