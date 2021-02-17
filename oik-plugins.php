@@ -156,7 +156,7 @@ function oikp_init( ) {
   
   remove_action( 'wp_head', 'jetpack_og_tags' );
   //remove_action( 'get_the_excerpt', 'wp_trim_excerpt'  );
-  add_action( 'the_content', "oikp_the_content", 1, 1 );
+  add_filter( 'the_content', "oikp_the_content", 1, 1 );
   add_action( "oik_admin_menu", "oikp_admin_menu" );
 }
 
@@ -255,7 +255,7 @@ function oikp_oik_plugins_CPT_template() {
 	$template = array();
 	$template[] = [ 'core/paragraph', [ 'placeholder' => 'Copy the plugin description'] ];
 	$template[] = [ 'core/shortcode', [ 'text' => '[bw_plug name=plugin banner=p]' ] ];
-	$template[] = [ 'core/paragraph', [ 'content' => 'This plugin provides xx blocks' ] ];
+	$template[] = [ 'core/paragraph', [ 'content' => 'v[bw_field _component_version] delivers [bw_field _oikp_block_count] blocks.' ] ];
 	$template[] = [ 'core/more' ];
 	$template[] = [ 'oik-block/blocklist' ];
 	$template[] = [ 'core/shortcode', [ 'text' => '[bw_plug name=plugin table=y]' ] ];
@@ -398,7 +398,7 @@ function oikp_oik_pluginversion_CPT_template() {
 	$template[] = [ 'oik-block/fields', [ 'fields' => '[featured]' ] ];
 	$template[] = [ 'core/more' ];
 	$template[] = [ 'core/heading', ['content' => 'Changes'] ];
-	$template[] = [ 'oik-block/csv', [ 'content' => 'Change,Reference' ] ];
+	$template[] = [ 'oik-bbw/csv', [ 'content' => 'Change,Reference' ] ];
 	$template[] = [ 'core/file' ];
 
 	return $template;
