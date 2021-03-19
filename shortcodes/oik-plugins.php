@@ -69,7 +69,7 @@ function _oikp_download_freeversion( $version, $post, $class ) {
  * 
  */
 function _oikp_download_wordpressversion( $post, $slug ) {
-  $link = "http://downloads.wordpress.org/plugin/$slug.zip";
+  $link = "https://downloads.wordpress.org/plugin/$slug.zip";
   $text = sprintf( __( 'Download %1$s from wordpress.org', "oik-plugins" ), $slug );
   //art_button( $link, $text, $text, "wordpress" );
   alink( "wordpress", $link, $text, $text );
