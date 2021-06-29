@@ -37,7 +37,7 @@ oik_plugins_loaded();
  */
 function oik_plugins_loaded() {
 	add_action( "init", "oikp_plugin_rewrite" );
-	add_action( 'oik_fields_loaded', 'oikp_init' );
+	add_action( 'oik_fields_loaded', 'oikp_init', 11 );
 	add_action( "admin_notices", "oikp_activation" );
 	add_filter( "oik_validate_apikey", "oikp_oik_validate_apikey", 10, 2 );
 	add_filter( "oik_clone_filter_all_post_meta", "oikp_oik_clone_filter_all_post_meta" );
@@ -237,17 +237,17 @@ function oik_register_oik_plugin() {
   $purchasable_product_type[] = "download"; 
   $purchasable_product_type[] = "product"; 
   bw_register_field( "_oikp_prod", "noderef", "Purchasable product", array( '#type' => $purchasable_product_type, '#optional' => true, '#theme_null' => false ) );   
-	bw_register_field_for_object_type( "_component_version", $post_type );
-  bw_register_field_for_object_type( "_oikp_type", $post_type );
-  bw_register_field_for_object_type( "_oikp_slug", $post_type );
-  bw_register_field_for_object_type( "_oikp_name", $post_type );
-  bw_register_field_for_object_type( "_oikp_desc", $post_type );
+  bw_register_field_for_object_type( "_component_version", $post_type, true );
+  bw_register_field_for_object_type( "_oikp_type", $post_type, true );
+  bw_register_field_for_object_type( "_oikp_slug", $post_type, true );
+  bw_register_field_for_object_type( "_oikp_name", $post_type, true );
+  bw_register_field_for_object_type( "_oikp_desc", $post_type, true );
 	
-  bw_register_field_for_object_type( "_oikp_git", $post_type );
-  bw_register_field_for_object_type( "_oikp_prod", $post_type );
-	bw_register_field_for_object_type( "_oikp_uri", $post_type );
-  bw_register_field_for_object_type( "_oikp_dependency", $post_type );
-  bw_register_field_for_object_type( '_oikp_block_count', $post_type );
+  bw_register_field_for_object_type( "_oikp_git", $post_type, true );
+  bw_register_field_for_object_type( "_oikp_prod", $post_type, true );
+	bw_register_field_for_object_type( "_oikp_uri", $post_type, true );
+  bw_register_field_for_object_type( "_oikp_dependency", $post_type, true );
+  bw_register_field_for_object_type( '_oikp_block_count', $post_type, true );
   oikp_columns_and_titles( $post_type );
 }
 
@@ -419,10 +419,10 @@ function oik_register_oik_pluginversion_fields( $post_type ) {
   bw_register_field( "_oikpv_version", "text", "Version", array( '#hint' => " (omit the v)" ) ); 
   bw_register_field( "_oikpv_download_count", "numeric", "Download count", array( '#theme' => false ) );
   bw_register_field( "_oikpv_update_count", "numeric", "Update count", array( '#theme' => false ) );
-  bw_register_field_for_object_type( "_oikpv_version", $post_type );
-  bw_register_field_for_object_type( "_oikpv_plugin", $post_type );
-  bw_register_field_for_object_type( "_oikpv_download_count", $post_type );
-  bw_register_field_for_object_type( "_oikpv_update_count", $post_type );
+  bw_register_field_for_object_type( "_oikpv_version", $post_type, true );
+  bw_register_field_for_object_type( "_oikpv_plugin", $post_type, true );
+  bw_register_field_for_object_type( "_oikpv_download_count", $post_type, true );
+  bw_register_field_for_object_type( "_oikpv_update_count", $post_type, true );
   oikp_columns_and_titles( $post_type );
 }
 
