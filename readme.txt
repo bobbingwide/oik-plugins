@@ -3,8 +3,8 @@ Contributors: bobbingwide
 Donate link: https://www.oik-plugins.com/oik/oik-donate/
 Tags: plugins, server, FREE, premium, shortcodes
 Requires at least: 5.0.0                            
-Tested up to: 5.3.0
-Stable tag: 1.20.0
+Tested up to: 5.8.1
+Stable tag: 1.21.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,9 @@ The information displayed on the plugin update page now expands shortcodes.
 
 
 == Upgrade Notice ==
+= 1.21.0 = 
+Update to see plugin version fields in the REST API.
+
 = 1.20.0 = 
 Update for Blocks delivered field. For use on blocks.wp-a2.org 
 
@@ -194,13 +197,21 @@ Requires oik v1.17 or higher and oik-fields v1.17 or higher
 Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 == Changelog ==
+= 1.21.1 =
+* Changed: Enable support for the sb-field-block plugin #24
+* Changed: Set plugin version fields to show in REST
+* Fixed: Use https: protocol to download plugins from downloads.wordpress.org,#23
+* Changed: Use oik-bbw/csv instead of oik-block/csv #19
+* Tested: With WordPress 5.8.1 and WordPress Multi Site
+* Tested: With PHP 8.0
+* Tested: With Gutenberg 11.4.1
+
 = 1.20.0 = 
 * Changed: Improve counting to determine which tabs to display,[github bobbingwide oik-plugins issues 9]
 * Added: Add Blocks delivered field.,[github bobbingwide oik-plugins issues 22]
 * Fixes: Check userdata is set before accessing properties. Change default user_url value.,[github bobbingwide oik-plugins issues 21] 
 * Tested: With WordPress 5.3 and WordPress Multi Site
 * Tested: With PHP 7.3
-* Tested: With PHPUnit 8
 
 = 1.19.0 = 
 * Added: Add block templates for oik-plugins and oik_pluginversion.,[github bobbingwide oik-plugins issues 19]
