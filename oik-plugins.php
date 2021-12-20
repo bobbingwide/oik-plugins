@@ -471,7 +471,8 @@ function oik_register_oik_premiumversion() {
   $post_type_args['taxonomies'] = array( "required_version", "compatible_up_to" );
   $post_type_args['menu_icon'] = 'dashicons-shield-alt';
   $post_type_args['supports'] = array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions', 'author', 'publicize', 'home', 'clone', 'custom-fields' );
-	$post_type_args['show_in_rest'] = true;
+  $post_type_args['show_in_rest'] = true;
+  //	$post_type_args['has_archive'] = true;
   bw_register_post_type( $post_type, $post_type_args );
   oik_register_oik_pluginversion_fields( $post_type );
 }
