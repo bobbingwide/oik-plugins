@@ -46,6 +46,15 @@ function oik_plugins_options_do_page() {
   bw_flush();
 }
 
+function oik_plugins_default_plugins_server_options() {
+    $options = [];
+    $options['zipdir'] = '';
+    $options['apikey'] = '';
+    $options['faq'] = null;
+    $options['apiref'] = null;
+    return $options;
+}
+
 /**
  * Display the oik-plugins server options
  * 
@@ -54,14 +63,13 @@ function oik_plugins_options_do_page() {
 function oik_plugins_server_options() {
   $option = 'bw_plugins_server'; 
   $options = bw_form_start( $option, 'oik_plugins_server' );
+  if ( false === $options ) {
+      $options = oik_plugins_default_plugins_server_options();
+  }
   bw_textfield_arr( $option, "Folder for premium plugins", $options, 'zipdir', 40 );
   bw_textfield_arr( $option, "API key", $options, 'apikey', 26 );
-  //bw_textfield_arr( $option, "Author", $options, 'author', 30 );
-  // Do we have a field for "users" ?
-  //bw_select_arr( $option, "Author name", $options, "display_name", array( "#options" =>  bw_user_list() ));
-  // bw_form_field_noderef( "bw_plugins_server[author_id], "", "Author", $options['author_id'], array( "#type" => "user" ));
   bw_form_field_noderef( "bw_plugins_server[faq]", "", "FAQ page", $options['faq'], array( "#type" => "page", "#optional" => true ));
-	bw_checkbox_arr( $option, "Use [apiref] shortcode", $options, 'apiref' );
+  bw_checkbox_arr( $option, "Use [apiref] shortcode", $options, 'apiref' );
   etag( "table" );   
   p( isubmit( "ok", "Update", null, "button-primary" ) );
   etag( "form" );
