@@ -176,14 +176,16 @@ function oik_plugins_status_report() {
   th( "Totals" ); 
   etag( "tr" );
 
-  foreach ( $bw_plugin_totals as $plugin => $plugin_total  ) {
-    stag( "tr" );
-    td( $plugin );
-    td( $plugin_total['downloads'] );
-    td( $plugin_total['updates'] );
-    td( $plugin_total['downloads'] + $plugin_total['updates'] );
-    etag( "tr" );
-  } 
+  if  ( $bw_plugin_totals && count( $bw_plugin_totals) ) {
+	  foreach ( $bw_plugin_totals as $plugin=>$plugin_total ) {
+		  stag( "tr" );
+		  td( $plugin );
+		  td( $plugin_total['downloads'] );
+		  td( $plugin_total['updates'] );
+		  td( $plugin_total['downloads'] + $plugin_total['updates'] );
+		  etag( "tr" );
+	  }
+  }
   etag( "table" );
 }
 
