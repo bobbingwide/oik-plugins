@@ -4,8 +4,8 @@
 * Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: plugins, server, FREE, premium, shortcodes
 * Requires at least: 5.0.0
-* Tested up to: 5.8.1
-* Stable tag: 1.21.0
+* Tested up to: 5.9-beta4
+* Stable tag: 1.21.1
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,6 +79,9 @@ The information displayed on the plugin update page now expands shortcodes.
 
 
 ## Upgrade Notice 
+# 1.21.1 
+Upgrade to avoid Notices in oik options > Plugin server settings
+
 # 1.21.0 
 Update to see plugin version fields in the REST API.
 
@@ -199,6 +202,14 @@ Requires oik v1.16 or higher and oik-fields v1.17 or higher
 
 ## Changelog 
 # 1.21.1 
+* Fixed: Avoid Warning when there are no downloadable plugins Fixes #16
+* Fixed: Avoid Warning when plugins server options are not set. Fixes #16
+* Changed: Note: oik_premiumversion is show_in_rest but not has_archive
+* Tested: With WordPress 5.9-beta4 and WordPress Multi Site
+* Tested: With PHP 8.0
+* Tested: With Gutenberg 12.2.0
+
+# 1.21.0 
 * Changed: Enable support for the sb-field-block plugin #24
 * Changed: Set plugin version fields to show in REST
 * Fixed: Use https: protocol to download plugins from downloads.wordpress.org,#23
