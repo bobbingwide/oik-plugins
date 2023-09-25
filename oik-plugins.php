@@ -12,7 +12,7 @@ Domain Path: /languages/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-    Copyright 2012-2022 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2012-2023 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -115,11 +115,11 @@ function oikp_posts_request( $request, $query ) {
     //bw_trace2();
     //bw_backtrace();
     //oikp_template_redirect();
-    $request = null;
+    $request = false;
   } else {
     $oik_banner = get_query_var( "oik-banner" );
     if ( $oik_banner ) {
-      $request = null;
+      $request = false;
     }
   }
   if ( !$request ) {
@@ -288,10 +288,10 @@ function bw_function_namify( $name ) {
 if ( !function_exists( "oikp_columns_and_titles" ) ) {
 function oikp_columns_and_titles( $post_type ) {
   $post_type_namify = bw_function_namify( $post_type );
-  add_filter( "manage_edit-${post_type}_columns", "${post_type_namify}_columns", 10 );
-  add_action( "manage_${post_type}_posts_custom_column", "bw_custom_column_admin", 10, 2 );
-  add_filter( "oik_table_fields_${post_type}", "${post_type_namify}_fields", 10, 2 );
-  //add_filter( "oik_table_titles_${post_type}", "${post_type_namify}_titles", 10, 3 ); 
+  add_filter( "manage_edit-{$post_type}_columns", "{$post_type_namify}_columns", 10 );
+  add_action( "manage_{$post_type}_posts_custom_column", "bw_custom_column_admin", 10, 2 );
+  add_filter( "oik_table_fields_{$post_type}", "{$post_type_namify}_fields", 10, 2 );
+  //add_filter( "oik_table_titles_{$post_type}", "{$post_type_namify}_titles", 10, 3 ); 
 }
 }
 
@@ -395,10 +395,13 @@ function oik_register_oik_pluginversion() {
 function oikp_oik_pluginversion_CPT_template() {
 	$template = array();
 	$template[] = [ 'core/paragraph', [ 'placeholder' => 'Copy the upgrade notice'] ];
-	$template[] = [ 'oik-block/fields', [ 'fields' => '[featured]' ] ];
+	//$template[] = [ 'oik-block/fields', [ 'fields' => 'featured' ] ];
+	$template[] = ['core/post-featured-image'];
 	$template[] = [ 'core/more' ];
 	$template[] = [ 'core/heading', ['content' => 'Changes'] ];
 	$template[] = [ 'oik-bbw/csv', [ 'content' => 'Change,Reference' ] ];
+	$template[] = [ 'core/heading', ['content' => 'Tested'] ];
+	$template[] = [ 'core/list' ];
 	$template[] = [ 'core/file' ];
 
 	return $template;
@@ -419,12 +422,12 @@ function oik_register_oik_pluginversion_fields( $post_type ) {
   bw_register_field( "_oikpv_version", "text", "Version", array( '#hint' => " (omit the v)" ) ); 
   bw_register_field( "_oikpv_download_count", "numeric", "Download count", array( '#theme' => false ) );
   bw_register_field( "_oikpv_update_count", "numeric", "Update count", array( '#theme' => false ) );
-  bw_register_field( "oikpv_no_underscore", "numeric", "No underscore", array( '#theme' => false ) );
+  //bw_register_field( "oikpv_no_underscore", "numeric", "No underscore", array( '#theme' => false ) );
   bw_register_field_for_object_type( "_oikpv_version", $post_type, true );
   bw_register_field_for_object_type( "_oikpv_plugin", $post_type, true );
   bw_register_field_for_object_type( "_oikpv_download_count", $post_type, true );
   bw_register_field_for_object_type( "_oikpv_update_count", $post_type, true );
-  bw_register_field_for_object_type( "oikpv_no_underscore", $post_type, true );
+  //bw_register_field_for_object_type( "oikpv_no_underscore", $post_type, true );
   oikp_columns_and_titles( $post_type );
 }
 
@@ -572,9 +575,9 @@ function oikp_create_new_file_name( $old_file ) {
   if ( $plugin && $version ) {
      $zipdir = bw_get_option( "zipdir", "bw_plugins_server" );
      if ( PHP_OS == "WINNT" ) {
-       $new_file = "C:\\${zipdir}\\";
+       $new_file = "C:\\{$zipdir}\\";
      } else {
-       $new_file = oikp_build_external_dir( "/${zipdir}/" );
+       $new_file = oikp_build_external_dir( "/{$zipdir}/" );
      }   
      $new_file .= $plugin;
      $new_file .= ".";
