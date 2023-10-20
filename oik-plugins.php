@@ -4,7 +4,7 @@ Plugin Name: oik plugins server
 Depends: oik base plugin, oik-fields
 Plugin URI: https://www.oik-plugins.com/oik-plugins/oik-plugins
 Description: oik plugins server for premium and free(mium) oik plugins
-Version: 1.21.1
+Version: 1.21.2
 Author: bobbingwide
 Author URI: https://www.bobbingwide.com/about-bobbing-wide
 Text Domain: oik-plugins
